@@ -1,0 +1,1567 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nómina Segura Auditoría - Plataforma de Fiscalización Avanzada 2026</title>
+    <link rel="stylesheet" href="offline.css">
+    <style>
+        body { font-family: 'Segoe UI', Arial, sans-serif; overflow-x: hidden; }
+        .app-logo { width: 210px; height: 68px; object-fit: contain; border-radius: 8px; }
+        .app-nav { flex-wrap: wrap; justify-content: center; }
+        #content-simulator, #content-settlement, #content-history, #content-metrics { min-width: 0; }
+        input, select, button { max-width: 100%; }
+        @media (max-width: 1023px) {
+            .app-header-inner { align-items: stretch !important; }
+            .app-brand { justify-content: center; }
+            .app-nav { width: 100%; }
+            .app-nav button { flex: 1 1 210px; }
+            .back-link { align-self: center; }
+        }
+        @media (max-width: 639px) {
+            .app-header-inner { padding-top: 10px !important; padding-bottom: 10px !important; gap: 10px !important; }
+            .app-brand { flex-direction: column; text-align: center; gap: 8px !important; }
+            .app-logo { width: 180px; height: 58px; }
+            .app-nav { display: grid !important; grid-template-columns: 1fr 1fr; width: 100%; gap: 4px; }
+            .app-nav button { width: 100%; padding: 8px 6px !important; font-size: 10px; line-height: 1.2; }
+            main { padding-left: 10px !important; padding-right: 10px !important; }
+            #content-simulator .rounded-3xl { border-radius: 1rem; }
+        }
+        @media print {
+            .no-print { display: none !important; }
+            .print-area { display: block !important; width: 100%; position: absolute; left: 0; top: 0; }
+        }
+    
+        /* Compatibilidad entre equipos y zoom del navegador */
+        html { min-width: 320px; }
+        body { width: 100%; }
+        main { min-width: 0; }
+        table { max-width: 100%; }
+        @media (max-width: 1100px) {
+            .app-header-inner { position: relative; }
+        }
+    
+        /* Compatibilidad entre equipos y zoom del navegador */
+        html { min-width: 320px; }
+        body { width: 100%; }
+        main { min-width: 0; }
+        table { max-width: 100%; }
+        @media (max-width: 1100px) {
+            .app-header-inner { position: relative; }
+        }
+    
+        /* Compatibilidad entre equipos y zoom del navegador */
+        html { min-width: 320px; }
+        body { width: 100%; }
+        main { min-width: 0; }
+        table { max-width: 100%; }
+        @media (max-width: 1100px) {
+            .app-header-inner { position: relative; }
+        }
+    
+        /* Compatibilidad entre equipos y zoom del navegador */
+        html { min-width: 320px; }
+        body { width: 100%; }
+        main { min-width: 0; }
+        table { max-width: 100%; }
+        @media (max-width: 1100px) {
+            .app-header-inner { position: relative; }
+        }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 min-h-screen flex flex-col antialiased">
+
+    <header class="bg-gradient-to-r from-indigo-800 via-slate-900 to-indigo-950 text-white shadow-xl sticky top-0 z-50 no-print">
+        <div class="app-header-inner max-w-7xl mx-auto px-4 py-4 sm:px-6 lg:px-8 flex flex-col lg:flex-row justify-between items-center gap-4">
+            <div class="app-brand flex items-center gap-4">
+                <div class="bg-white p-1 rounded-xl shadow-md flex items-center justify-center overflow-hidden">
+                    <img src="logo_web.png" alt="Logo Nómina Segura Auditoría" class="app-logo" onerror="console.log('Error al cargar el logo corporativo.');">
+                </div>
+                <div>
+                    <h1 class="text-base font-black tracking-tight uppercase">Nómina Segura Auditoría</h1>
+                    <p class="text-[10px] text-indigo-200 font-medium tracking-wide">Consola de Control de Costos Operacionales y Auditoría UGPP 2026</p>
+                </div>
+            </div>
+            
+            <nav class="app-nav flex gap-1 bg-slate-800/60 p-1 rounded-xl border border-indigo-500/20 text-xs">
+                <button onclick="switchTab('simulator')" id="tab-simulator" class="px-3 py-2 font-bold rounded-lg bg-indigo-600 text-white shadow transition-all">
+                    Simulación de Nómina
+                </button>
+                <button onclick="switchTab('settlement')" id="tab-settlement" class="px-3 py-2 font-bold rounded-lg text-slate-300 hover:text-white transition-all">
+                    ⚖️ Liquidación Definitiva
+                </button>
+                <button onclick="switchTab('history')" id="tab-history" class="px-3 py-2 font-bold rounded-lg text-slate-300 hover:text-white transition-all">
+                    Historial Registrado
+                </button>
+                <button onclick="switchTab('metrics')" id="tab-metrics" class="px-3 py-2 font-bold rounded-lg text-slate-300 hover:text-white transition-all flex items-center gap-1">
+                    📊 Tablero de Indicadores
+                </button>
+            </nav>
+                        <a href="index.html" class="back-link bg-cyan-500 text-white px-6 py-2 rounded-full font-bold hover:bg-slate-900 transition shadow-lg text-xs whitespace-nowrap">REGRESAR</a>
+        </div>
+    </header>
+
+    <main class="flex-grow max-w-7xl w-full mx-auto px-4 py-6 sm:px-6 lg:px-8">
+        
+        <section id="content-simulator" class="block no-print space-y-6">
+            
+            <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm space-y-4">
+                <div class="flex justify-between items-center border-b pb-2 cursor-pointer" onclick="toggleConfigPanel()">
+                    <h3 class="text-sm font-black text-slate-700 uppercase tracking-wider flex items-center gap-2">
+                        <span>⚙️</span> Variables Legal y Rubros Adicionales de Operación (Año 2026)
+                    </h3>
+                    <span id="btn-toggle-cfg" class="text-xs font-bold text-indigo-600">▲ Colapsar Parámetros</span>
+                </div>
+                
+                <div id="cuerpo-configuracion" class="space-y-4 pt-2">
+                    <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+                        <div>
+                            <label class="block text-[10px] font-black text-slate-500 uppercase tracking-wide mb-1">SMMLV Vigente 2026 ($)</label>
+                            <input type="number" id="cfg-smmlv" value="1750905" oninput="sincronizarCalculosEnVivo()" class="w-full p-2 text-xs rounded-lg border font-bold text-slate-700 bg-slate-50 focus:outline-indigo-500">
+                            <div class="mt-1 flex"><span id="lbl-mirror-smmlv" class="text-[11px] font-black bg-indigo-50 text-indigo-600 px-2 py-0.5 rounded shadow-2xs border border-indigo-100/50"></span></div>
+                        </div>
+                        <div>
+                            <label class="block text-[10px] font-black text-slate-500 uppercase tracking-wide mb-1">Auxilio Transporte 2026 ($)</label>
+                            <input type="number" id="cfg-auxt" value="249095" oninput="sincronizarCalculosEnVivo()" class="w-full p-2 text-xs rounded-lg border font-bold text-slate-700 bg-slate-50 focus:outline-indigo-500">
+                            <div class="mt-1 flex"><span id="lbl-mirror-auxt" class="text-[11px] font-black bg-indigo-50 text-indigo-600 px-2 py-0.5 rounded shadow-2xs border border-indigo-100/50"></span></div>
+                        </div>
+                        <div>
+                            <label class="block text-[10px] font-black text-slate-500 uppercase tracking-wide mb-1">Valor UVT 2026 ($)</label>
+                            <input type="number" id="cfg-uvt" value="52374" oninput="sincronizarCalculosEnVivo()" class="w-full p-2 text-xs rounded-lg border font-bold text-slate-700 bg-slate-50 focus:outline-indigo-500">
+                            <div class="mt-1 flex"><span id="lbl-mirror-uvt" class="text-[11px] font-black bg-indigo-50 text-indigo-600 px-2 py-0.5 rounded shadow-2xs border border-indigo-100/50"></span></div>
+                        </div>
+                        <div>
+                            <label class="block text-[10px] font-black text-slate-500 uppercase tracking-wide mb-1">ARL Contratación</label>
+                            <select id="cfg-arl" onchange="sincronizarCalculosEnVivo()" class="w-full p-2 text-xs rounded-lg border font-bold text-slate-700 focus:outline-indigo-500">
+                                <option value="0.00522">Riesgo I (Administrativo - 0.522%)</option>
+                                <option value="0.02436">Riesgo III (Operativo - 2.436%)</option>
+                                <option value="0.0696" selected>Riesgo V (Máximo / Obras - 6.96%)</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="bg-slate-50 p-3 rounded-lg border flex items-center gap-3 shadow-2xs">
+                        <input type="checkbox" id="chk-exoneracion-impuestos" checked onchange="sincronizarCalculosEnVivo()" class="h-4 w-4 text-indigo-600 rounded focus:ring-indigo-500 border-slate-300">
+                        <label for="chk-exoneracion-impuestos" class="text-xs font-bold text-slate-700">
+                            Aplicar Exoneración de Aportes Patronales (SENA, ICBF y Salud - Ley 1607) si cumple topes mínimos.
+                        </label>
+                    </div>
+
+                    <div class="border-t pt-3">
+                        <h4 class="text-xs font-bold text-slate-600 uppercase tracking-wider mb-2">Otros Rubros de Operación</h4>
+                        <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                            <div>
+                                <label class="block text-[10px] font-medium text-slate-500 mb-1">Dotaciones (Factor)</label>
+                                <input type="number" id="cfg-p-dotacion" value="0.0948" step="0.0001" oninput="sincronizarCalculosEnVivo()" class="w-full p-2 text-xs rounded-lg border focus:outline-indigo-500">
+                            </div>
+                            <div>
+                                <label class="block text-[10px] font-medium text-slate-500 mb-1">Elementos Protección EPP (Factor)</label>
+                                <input type="number" id="cfg-p-epp" value="0.1296" step="0.0001" oninput="sincronizarCalculosEnVivo()" class="w-full p-2 text-xs rounded-lg border focus:outline-indigo-500">
+                            </div>
+                            <div>
+                                <label class="block text-[10px] font-medium text-slate-500 mb-1">Exámenes Médicos (Factor)</label>
+                                <input type="number" id="cfg-p-medicos" value="0.13" step="0.0001" oninput="sincronizarCalculosEnVivo()" class="w-full p-2 text-xs rounded-lg border focus:outline-indigo-500">
+                            </div>
+                            <div>
+                                <label class="block text-[10px] font-medium text-slate-500 mb-1">Aporte Especial FIC (Factor)</label>
+                                <input type="number" id="cfg-p-fic" value="0.025" step="0.0001" oninput="sincronizarCalculosEnVivo()" class="w-full p-2 text-xs rounded-lg border focus:outline-indigo-500">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="border-t pt-3">
+                        <h4 class="text-xs font-bold text-slate-600 uppercase tracking-wider mb-2">Provisiones de Prestaciones</h4>
+                        <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
+                            <div>
+                                <label class="block text-[10px] font-medium text-slate-500 mb-1">Cesantías (Factor)</label>
+                                <input type="number" id="cfg-p-cesantias" value="0.0833" step="0.0001" oninput="sincronizarCalculosEnVivo()" class="w-full p-2 text-xs rounded-lg border focus:outline-indigo-500">
+                            </div>
+                            <div>
+                                <label class="block text-[10px] font-medium text-slate-500 mb-1">Prima (Factor)</label>
+                                <input type="number" id="cfg-p-prima" value="0.0833" step="0.0001" oninput="sincronizarCalculosEnVivo()" class="w-full p-2 text-xs rounded-lg border focus:outline-indigo-500">
+                            </div>
+                            <div>
+                                <label class="block text-[10px] font-medium text-slate-500 mb-1">Vacaciones (Factor)</label>
+                                <input type="number" id="cfg-p-vacaciones" value="0.0417" step="0.0001" oninput="sincronizarCalculosEnVivo()" class="w-full p-2 text-xs rounded-lg border focus:outline-indigo-500">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="flex items-end pt-2">
+                        <button type="button" onclick="exportarBackupJSON()" class="bg-slate-800 text-white text-xs font-bold px-3 py-2 rounded-xl hover:bg-slate-900 transition-colors">📥 Backup JSON</button>
+                    </div>
+                </div>
+            </div>
+
+            <div id="panelAlertas" class="flex flex-col gap-2"></div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+                <div class="lg:col-span-6 bg-white p-6 rounded-2xl border border-slate-200 shadow-sm space-y-4">
+                    
+                    <h3 class="text-xs font-black text-slate-400 uppercase tracking-wider border-b pb-1">1. Ficha del Trabajador</h3>
+                    <form id="formFormulario" onsubmit="return false;" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                        <div class="lg:col-span-1">
+                            <label class="block text-xs font-semibold text-slate-600 mb-1">Cédula</label>
+                            <input type="number" id="inp-cedula" required oninput="sincronizarCalculosEnVivo()" class="w-full border rounded-xl px-3 py-2 text-sm focus:outline-indigo-500 font-medium">
+                        </div>
+                        <div class="lg:col-span-3">
+                            <label class="block text-xs font-semibold text-slate-600 mb-1">Nombre Completo</label>
+                            <input type="text" id="inp-nombre" required oninput="sincronizarCalculosEnVivo()" class="w-full border rounded-xl px-3 py-2 text-sm focus:outline-indigo-500 font-medium">
+                        </div>
+                        
+                        <div class="lg:col-span-2">
+                            <label class="block text-xs font-semibold text-slate-600 mb-1">Salario Básico Mensual ($)</label>
+                            <input type="number" id="inp-salario" value="1750905" min="0" oninput="sincronizarCalculosEnVivo()" class="w-full border rounded-xl px-3 py-2 text-sm font-bold text-indigo-700 focus:outline-indigo-500">
+                            <div class="mt-1 flex"><span id="lbl-mirror-salario" class="text-[11px] font-black bg-indigo-50 text-indigo-600 px-2 py-0.5 rounded shadow-2xs border border-indigo-100/50"></span></div>
+                        </div>
+
+                        <div class="lg:col-span-1">
+                            <label class="block text-xs font-semibold text-slate-600 mb-1">Periodicidad Pago</label>
+                            <select id="inp-periodicidad" onchange="sincronizarCalculosEnVivo()" class="w-full border rounded-xl px-3 py-2 text-sm font-semibold text-slate-700 bg-white focus:outline-indigo-500">
+                                <option value="30" selected>Mensual (30)</option>
+                                <option value="15">Quincenal (15)</option>
+                                <option value="10">Decenal (10)</option>
+                                <option value="7">Semanal (7)</option>
+                            </select>
+                            <div class="mt-1 flex justify-between items-center bg-emerald-50 px-2 py-1 rounded shadow-2xs border border-emerald-100/50" title="Salario correspondiente al periodo seleccionado">
+                                <span class="text-[9px] font-bold text-emerald-800">S. Periodo:</span>
+                                <span id="lbl-salario-periodo" class="text-[10px] font-black text-emerald-700">$0</span>
+                            </div>
+                        </div>
+
+                        <div class="lg:col-span-1">
+                            <label class="block text-xs font-semibold text-slate-600 mb-1">Incap/Vac (Días)</label>
+                            <div class="flex gap-2">
+                                <input type="number" id="inp-incap" value="0" min="0" max="30" oninput="sincronizarCalculosEnVivo()" class="w-1/2 border border-amber-200 rounded-xl px-2 py-2 text-sm focus:outline-amber-500 bg-amber-50/10 placeholder-slate-400" title="Días Incapacidad" placeholder="Inc">
+                                <input type="number" id="inp-vac" value="0" min="0" max="30" oninput="sincronizarCalculosEnVivo()" class="w-1/2 border border-sky-200 rounded-xl px-2 py-2 text-sm focus:outline-sky-500 bg-sky-50/10 placeholder-slate-400" title="Días Vacaciones" placeholder="Vac">
+                            </div>
+                        </div>
+                    </form>
+
+                    <h3 class="text-xs font-black text-slate-400 uppercase tracking-wider border-b pb-1 pt-2 flex justify-between items-center">
+                        <span>2. Control de Tiempos Manual</span>
+                        <span class="text-[10px] text-slate-500 font-bold bg-slate-100 px-2 py-0.5 rounded border">Digitar Horas del Periodo</span>
+                    </h3>
+                    
+                    <div class="bg-slate-50 p-4 rounded-xl border border-slate-200 space-y-3">
+                        <div class="grid grid-cols-4 md:grid-cols-7 gap-2 text-center text-[10px] text-slate-500 font-black">
+                            <div>
+                                <label class="block mb-1">RN</label>
+                                <input type="number" id="inp-rn" value="0" min="0" step="0.5" oninput="sincronizarCalculosEnVivo()" class="w-full bg-white border border-slate-300 rounded p-1.5 text-slate-800 focus:outline-indigo-500">
+                            </div>
+                            <div>
+                                <label class="block mb-1">HED</label>
+                                <input type="number" id="inp-hed" value="0" min="0" step="0.5" oninput="sincronizarCalculosEnVivo()" class="w-full bg-white border border-slate-300 rounded p-1.5 text-slate-800 focus:outline-indigo-500">
+                            </div>
+                            <div>
+                                <label class="block mb-1">HEN</label>
+                                <input type="number" id="inp-hen" value="0" min="0" step="0.5" oninput="sincronizarCalculosEnVivo()" class="w-full bg-white border border-slate-300 rounded p-1.5 text-slate-800 focus:outline-indigo-500">
+                            </div>
+                            <div>
+                                <label class="block mb-1">DYFLD</label>
+                                <input type="number" id="inp-dyfld" value="0" min="0" step="0.5" oninput="sincronizarCalculosEnVivo()" class="w-full bg-white border border-slate-300 rounded p-1.5 text-slate-800 focus:outline-indigo-500">
+                            </div>
+                            <div>
+                                <label class="block mb-1">DYFLN</label>
+                                <input type="number" id="inp-dyfln" value="0" min="0" step="0.5" oninput="sincronizarCalculosEnVivo()" class="w-full bg-white border border-slate-300 rounded p-1.5 text-slate-800 focus:outline-indigo-500">
+                            </div>
+                            <div>
+                                <label class="block mb-1">HEFD</label>
+                                <input type="number" id="inp-hefd" value="0" min="0" step="0.5" oninput="sincronizarCalculosEnVivo()" class="w-full bg-white border border-slate-300 rounded p-1.5 text-slate-800 focus:outline-indigo-500">
+                            </div>
+                            <div>
+                                <label class="block mb-1">HEFN</label>
+                                <input type="number" id="inp-hefn" value="0" min="0" step="0.5" oninput="sincronizarCalculosEnVivo()" class="w-full bg-white border border-slate-300 rounded p-1.5 text-slate-800 focus:outline-indigo-500">
+                            </div>
+                        </div>
+
+                        <div class="bg-slate-900 rounded-xl p-3 text-[10px] font-mono text-slate-400 grid grid-cols-2 md:grid-cols-4 gap-2 border-t mt-2">
+                            <div>v_RN: <span id="lbl-v-rn" class="text-amber-400 block font-bold">$0</span></div>
+                            <div>v_HED: <span id="lbl-v-hed" class="text-emerald-400 block font-bold">$0</span></div>
+                            <div>v_HEN: <span id="lbl-v-hen" class="text-emerald-400 block font-bold">$0</span></div>
+                            <div>v_DOM/FES: <span id="lbl-v-dom" class="text-sky-400 block font-bold">$0</span></div>
+                        </div>
+                    </div>
+
+                    <h3 class="text-xs font-black text-slate-400 uppercase tracking-wider border-b pb-1 pt-2">3. Descuentos Adicionales</h3>
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-600 mb-1">Otras Deducciones (Libranzas, Préstamos, Sindicatos)</label>
+                        <input type="number" id="inp-otras-ded" value="0" min="0" oninput="sincronizarCalculosEnVivo()" class="w-full md:w-1/2 border border-rose-200 rounded-xl px-3 py-2 text-sm font-bold text-rose-600 bg-rose-50/10 focus:outline-rose-500">
+                        <div class="mt-1 flex"><span id="lbl-mirror-otras-ded" class="text-[11px] font-black bg-indigo-50 text-indigo-600 px-2 py-0.5 rounded shadow-2xs border border-indigo-100/50"></span></div>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 pt-2">
+                        <button type="button" onclick="sincronizarCalculosEnVivo()" class="w-full bg-indigo-600 text-white font-extrabold text-xs py-4 px-4 rounded-xl hover:bg-indigo-700 shadow-md transition-all uppercase tracking-wider">
+                            Forzar Auditoría Manual
+                        </button>
+                        <button type="button" onclick="guardarDatosEnLocalStorage()" class="w-full bg-emerald-600 text-white font-extrabold text-xs py-4 px-4 rounded-xl hover:bg-emerald-700 shadow-md transition-all uppercase tracking-wider">
+                            Archivar Ficha en Local
+                        </button>
+                    </div>
+                </div>
+
+                <div class="lg:col-span-6 bg-slate-900 text-white p-6 rounded-3xl border-4 border-slate-800 text-xs space-y-4 shadow-xl">
+                    <h3 class="text-sm font-bold text-indigo-400 border-b border-slate-800 pb-2 flex justify-between items-center">
+                        <span>Consola de Costeo (Cálculo del Periodo)</span>
+                        <span id="prev-vhora" class="text-indigo-300 font-bold font-mono">$0 / h</span>
+                    </h3>
+
+                    <div class="space-y-1.5 bg-slate-950/40 p-3 rounded-xl border border-slate-800/60">
+                        <span class="text-[10px] font-bold uppercase tracking-wider text-emerald-400 block border-b border-slate-800 pb-1">1. Devengados Brutos del Periodo</span>
+                         <!--<div class="flex justify-between text-slate-400"><span>Sueldo Días Efectivos:</span><span id="prev-sueldo" class="text-white font-semibold">$0</span></div>-->
+
+                        <!-- Reemplaza la línea antigua de Sueldo Días Efectivos por estas tres -->
+                        <div class="flex justify-between text-slate-400">
+                            <span>Sueldo Días Efectivos:</span>
+                            <span id="prev-sueldo" class="text-white font-semibold">$0</span>
+                        </div>
+                        <div class="flex justify-between text-amber-300">
+                            <span>Incapacidades:</span>
+                            <span id="prev-incap" class="text-white font-semibold">$0</span>
+                        </div>
+                        <div class="flex justify-between text-sky-300">
+                            <span>Vacaciones:</span>
+                            <span id="prev-vac" class="text-white font-semibold">$0</span>
+                        </div>
+
+                        <div class="flex justify-between text-slate-400"><span>Auxilio de Transporte:</span><span id="prev-auxt" class="text-white font-semibold">$0</span></div>
+                        <div class="flex justify-between text-slate-400"><span>Tiempos Suplementarios (Recargos/Extras):</span><span id="prev-extras" class="text-white font-semibold">$0</span></div>
+                        <div class="flex justify-between font-bold text-emerald-400 border-t border-dashed border-slate-800 pt-1.5">
+                            <span>TOTAL DEVENGADO BRUTO:</span><span id="prev-total-dev">$0</span>
+                        </div>
+                    </div>
+
+                    <div class="space-y-1.5 bg-slate-950/40 p-3 rounded-xl border border-slate-800/60">
+                        <span class="text-[10px] font-bold uppercase tracking-wider text-rose-400 block border-b border-slate-800 pb-1">2. Deducciones / Retenciones Obligatorias</span>
+                        <div class="flex justify-between text-slate-400"><span>Salud Obrera (4%):</span><span id="prev-salud" class="text-white font-semibold">$0</span></div>
+                        <div class="flex justify-between text-slate-400"><span>Pensión Obrera (4%):</span><span id="prev-pension" class="text-white font-semibold">$0</span></div>
+                        <div class="flex justify-between text-slate-400"><span>Fondo de Solidaridad (FSP):</span><span id="prev-fsp" class="text-white font-semibold">$0</span></div>
+                        <div class="flex justify-between text-slate-400"><span>Retención en la Fuente (Art 383 ET):</span><span id="prev-retefuente" class="text-white font-semibold">$0</span></div>
+                        <div class="flex justify-between text-rose-400 font-bold"><span>Otras Deducciones (Libranzas/Préstamos):</span><span id="prev-otras-ded-consola" class="text-white font-semibold">$0</span></div>
+                        <div class="flex justify-between font-bold text-rose-400 border-t border-dashed border-slate-800 pt-1.5">
+                            <span>PAGO NETO ESTIMADO AL BOLSILLO:</span><span id="prev-neto" class="text-emerald-400 font-mono text-sm">$0</span>
+                        </div>
+                    </div>
+
+                    <div class="space-y-1.5 bg-slate-950/40 p-3 rounded-xl border border-slate-800/60">
+                        <span class="text-[10px] font-bold uppercase tracking-wider text-indigo-400 block border-b border-slate-800 pb-1">3. Provisiones de Prestaciones Sociales (Fracción Periodo)</span>
+                        <div class="flex justify-between text-slate-400"><span>Prima de Servicios (8.33%):</span><span id="prev-p-prima" class="text-white font-mono">$0</span></div>
+                        <div class="flex justify-between text-slate-400"><span>Cesantías Obligatorias (8.33%):</span><span id="prev-p-cesantias" class="text-white font-mono">$0</span></div>
+                        <div class="flex justify-between text-slate-400"><span>Intereses sobre Cesantías (12% s.c.):</span><span id="prev-p-intces" class="text-white font-mono">$0</span></div>
+                        <div class="flex justify-between text-slate-400"><span>Compensación Vacaciones (4.17%):</span><span id="prev-p-vacaciones" class="text-white font-mono">$0</span></div>
+                    </div>
+
+                    <div class="space-y-1.5 bg-slate-950/40 p-3 rounded-xl border border-slate-800/60">
+                        <span class="text-[10px] font-bold uppercase tracking-wider text-amber-400 block border-b border-slate-800 pb-1">4. Carga Social y Operación de Empresa (Fracción Periodo)</span>
+                        <div class="flex justify-between text-slate-400"><span>Pensión Patronal (12%):</span><span id="prev-pat-pension" class="text-white">$0</span></div>
+                        <div class="flex justify-between text-slate-400"><span>Salud Patronal (8.5%):</span><span id="prev-pat-salud" class="text-white">$0</span></div>
+                        <div class="flex justify-between text-slate-400"><span>SENA (2%) & ICBF (3%):</span><span id="prev-pat-parafiscales" class="text-white">$0</span></div>
+                        <div class="flex justify-between text-slate-300 font-bold"><span>Caja Compensación Familiar (4% No Exonerable):</span><span id="prev-pat-ccf" class="text-amber-400 font-bold">$0</span></div>
+                        <div class="flex justify-between text-slate-400"><span>ARL del Trabajador (Riesgo):</span><span id="prev-pat-arl" class="text-white">$0</span></div>
+                        <div class="flex justify-between text-slate-400"><span>Rubros Operacionales (EPP, Dotación, Médicos, FIC):</span><span id="prev-pat-otros" class="text-slate-300">$0</span></div>
+                    </div>
+
+                    <div class="bg-slate-950 p-4 rounded-2xl border border-slate-800 flex justify-between items-center text-sm font-black">
+                        <span class="text-indigo-400 uppercase tracking-wide">COSTO TOTAL EMPRESA EN ESTE PERIODO:</span>
+                        <span id="prev-costo-total-empresa" class="text-xl text-amber-400 font-mono">$0</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="content-settlement" class="hidden no-print space-y-6">
+            <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm space-y-4">
+                <h2 class="text-base font-black uppercase tracking-tight text-slate-700 border-b pb-2 flex justify-between items-center">
+                    <span>⚖️ Módulo de Liquidación de Contrato y Finiquito Experto (Norma CST)</span>
+                    <span class="text-[10px] bg-emerald-100 text-emerald-800 px-2 py-0.5 rounded font-bold uppercase tracking-wide">Base Comercial 360 Días</span>
+                </h2>
+                <p class="text-xs text-slate-500 font-medium">
+                    Cálculo automatizado y proporcional según jurisprudencia colombiana. Discrimina bases con Auxilio de Transporte incorporado para Primas y Cesantías según directriz legal.
+                </p>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4 bg-slate-50 p-4 rounded-xl border">
+                    <div>
+                        <label class="block text-[11px] font-bold text-slate-600 mb-1">Buscar por Cédula Archivada</label>
+                        <select id="liq-select-empleado" onchange="cargarEmpleadoParaLiquidar()" class="w-full border rounded-lg p-2 text-xs font-semibold text-slate-700 bg-white focus:outline-indigo-500">
+                            <option value="">-- Seleccionar Empleado Archivando --</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-[11px] font-bold text-slate-600 mb-1">Salario Básico Contractual Mensual ($)</label>
+                        <input type="number" id="liq-salario-base" value="1750905" oninput="sincronizarEspejoLiquidacion()" class="w-full border rounded-lg p-2 text-xs font-bold text-indigo-700 focus:outline-indigo-500">
+                        <div class="mt-1 flex"><span id="lbl-mirror-liq-salario" class="text-[11px] font-black bg-indigo-50 text-indigo-600 px-2 py-0.5 rounded shadow-2xs border border-indigo-100/50"></span></div>
+                    </div>
+                    <div>
+                        <label class="block text-[11px] font-bold text-slate-600 mb-1">Motivo de Retiro / Despido</label>
+                        <select id="liq-motivo" class="w-full border rounded-lg p-2 text-xs font-semibold text-slate-700 bg-white focus:outline-indigo-500">
+                            <option value="voluntario" selected>Renuncia Voluntaria o Mutuo Acuerdo</option>
+                            <option value="justa_causa">Despido con Justa Causa</option>
+                            <option value="injusta_causa">Despido sin Justa Causa (Aplica Indemnización Art. 64)</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="bg-indigo-50/50 p-4 rounded-xl border border-indigo-100 grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <div class="md:col-span-3 pb-1 border-b border-indigo-200/50">
+                        <span class="text-xs font-black uppercase text-indigo-700 tracking-wide">💼 Ajustes Monetarios de Cierre Colectivo</span>
+                    </div>
+                    <div>
+                        <label class="block text-[11px] font-bold text-slate-600 mb-1">Bonificaciones y Adiciones ($)</label>
+                        <input type="number" id="liq-bonos" value="0" min="0" oninput="sincronizarEspejoLiquidacion()" class="w-full border rounded-lg p-2 text-xs font-bold text-emerald-700 focus:outline-emerald-500 bg-white shadow-2xs">
+                        <span class="text-[9px] text-slate-400 block mt-0.5">Comisiones pendientes, bonos extralegales o gratificaciones.</span>
+                    </div>
+                    <div>
+                        <label class="block text-[11px] font-bold text-slate-600 mb-1">Préstamos y Saldos Deudores ($)</label>
+                        <input type="number" id="liq-prestamos" value="0" min="0" oninput="sincronizarEspejoLiquidacion()" class="w-full border rounded-lg p-2 text-xs font-bold text-rose-700 focus:outline-rose-500 bg-white shadow-2xs">
+                        <span class="text-[9px] text-slate-400 block mt-0.5">Saldos pendientes de libranzas, anticipos o deudas corporativas.</span>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-4 bg-slate-50 p-4 rounded-xl border mt-2">
+                    <div>
+                        <label class="block text-[11px] font-bold text-slate-600 mb-1">Fecha de Ingreso</label>
+                        <input type="date" id="liq-f-ingreso" value="2026-01-01" class="w-full border rounded-lg p-2 text-xs font-semibold text-slate-700 focus:outline-indigo-500">
+                    </div>
+                    <div>
+                        <label class="block text-[11px] font-bold text-slate-600 mb-1">Fecha de Retiro</label>
+                        <input type="date" id="liq-f-retiro" value="2026-05-30" class="w-full border rounded-lg p-2 text-xs font-semibold text-slate-700 focus:outline-indigo-500">
+                    </div>
+                    <div>
+                        <label class="block text-[11px] font-bold text-slate-600 mb-1">Días de Vacaciones Disfrutadas</label>
+                        <input type="number" id="liq-vac-disfrutadas" value="0" min="0" class="w-full border rounded-lg p-2 text-xs font-bold text-slate-700 focus:outline-indigo-500">
+                        <span class="text-[9px] text-slate-400 block mt-0.5">Días tomados en el contrato para restar de la bolsa global.</span>
+                    </div>
+                    <div class="flex items-end">
+                        <button type="button" onclick="calcularLiquidacionTotalContrato()" class="w-full bg-indigo-600 text-white font-extrabold text-xs py-2.5 px-4 rounded-xl hover:bg-indigo-700 shadow-md transition-all uppercase tracking-wider">
+                            ⚙️ Calcular Finiquito Experto
+                        </button>
+                    </div>
+                </div>
+
+                <div id="panelAlertasLiquidacion" class="flex flex-col gap-2"></div>
+
+                <div id="wrapper-resultados-liquidacion" class="hidden space-y-4 pt-4 border-t">
+                    <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+                        <div class="lg:col-span-7 bg-slate-900 text-white p-6 rounded-2xl space-y-3.5 font-mono text-xs shadow-inner">
+                            <h4 class="text-indigo-400 font-black border-b border-slate-800 pb-2 uppercase tracking-wider flex justify-between text-sm">
+                                <span>📋 Desglose Técnico de Acreencias Laborales</span>
+                                <span id="liq-out-dias-totales" class="text-slate-400 text-xs">0 días</span>
+                            </h4>
+                            
+                            <div class="space-y-2 bg-slate-950/60 p-3 rounded-xl border border-slate-800">
+                                <div class="flex flex-col md:flex-row justify-between border-b border-slate-800/50 pb-1.5">
+                                    <span class="text-slate-400 font-sans">1. Cesantías Proporcionales:</span>
+                                    <div class="text-right">
+                                        <span id="liq-out-cesantias" class="text-emerald-400 font-bold block">$0</span>
+                                        <span id="formula-cesantias" class="text-[10px] text-slate-500 block">Fórmula: (Base * Días) / 360</span>
+                                    </div>
+                                </div>
+                                <div class="flex flex-col md:flex-row justify-between border-b border-slate-800/50 pb-1.5">
+                                    <span class="text-slate-400 font-sans">2. Intereses sobre Cesantías:</span>
+                                    <div class="text-right">
+                                        <span id="liq-out-intces" class="text-emerald-400 font-bold block">$0</span>
+                                        <span id="formula-intces" class="text-[10px] text-slate-500 block">Fórmula: (Cesantías * Días * 0.12) / 360</span>
+                                    </div>
+                                </div>
+                                <div class="flex flex-col md:flex-row justify-between border-b border-slate-800/50 pb-1.5">
+                                    <span class="text-slate-400 font-sans">3. Prima de Servicios Semestral:</span>
+                                    <div class="text-right">
+                                        <span id="liq-out-prima" class="text-emerald-400 font-bold block">$0</span>
+                                        <span id="formula-prima" class="text-[10px] text-slate-500 block">Fórmula: (Base * Días Semestre) / 360</span>
+                                    </div>
+                                </div>
+                                <div class="flex flex-col md:flex-row justify-between border-b border-slate-800/50 pb-1.5">
+                                    <span class="text-slate-400 font-sans">4. Vacaciones Compensadas:</span>
+                                    <div class="text-right">
+                                        <span id="liq-out-vacaciones" class="text-emerald-400 font-bold block">$0</span>
+                                        <span id="formula-vacaciones" class="text-[10px] text-slate-500 block">Fórmula: (Sueldo Básico * Días Pendientes) / 360</span>
+                                    </div>
+                                </div>
+                                <div class="flex flex-col md:flex-row justify-between border-b border-slate-800/50 pb-1.5">
+                                    <span class="text-emerald-400 font-sans">5. (+) Bonos / Adiciones de Cierre:</span>
+                                    <div class="text-right">
+                                        <span id="liq-out-bonos" class="text-emerald-400 font-bold block">$0</span>
+                                    </div>
+                                </div>
+                                <div class="flex flex-col md:flex-row justify-between pb-0.5">
+                                    <span class="text-rose-400 font-sans">6. (-) Préstamos / Deducciones:</span>
+                                    <div class="text-right">
+                                        <span id="liq-out-prestamos" class="text-rose-400 font-bold block">$0</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="bg-slate-950/40 p-3 rounded-xl border border-slate-800 text-[11px] font-sans space-y-1 text-slate-400">
+                                <div class="flex justify-between"><span>Días acumulados en el Semestre (Prima):</span><strong id="liq-out-dias-prima" class="text-indigo-300">0 días</strong></div>
+                                <div class="flex justify-between"><span>Bolsa total de vacaciones ganadas:</span><strong id="liq-out-total-vac-derecho" class="text-sky-300">0 días</strong></div>
+                                <div class="flex justify-between"><span>Días netos de vacaciones a pagar:</span><strong id="liq-out-dias-vac-calculadas" class="text-sky-400">0 días</strong></div>
+                            </div>
+
+                            <div class="flex justify-between text-rose-400 font-bold border-t border-dashed border-slate-800 pt-2 text-xs uppercase font-sans">
+                                <span>Indemnización por Despido (Art. 64 CST):</span>
+                                <span id="liq-out-indemnizacion" class="font-mono">$0</span>
+                            </div>
+                            <div class="flex justify-between text-lg font-black text-amber-400 border-t-2 pt-2 font-sans">
+                                <span>TOTAL FINIQUITO NETO A PAGAR:</span>
+                                <span id="liq-out-total-neto" class="font-mono text-xl">$0</span>
+                            </div>
+                        </div>
+
+                        <div class="lg:col-span-5 bg-white p-6 rounded-2xl border border-slate-200 flex flex-col justify-between shadow-xs">
+                            <div class="space-y-3 text-xs">
+                                <h4 class="font-black text-slate-700 uppercase tracking-wider">Normatividad y Blindaje de Auditoría</h4>
+                                <p class="text-[11px] text-slate-500 font-medium">Este informe sirve de soporte para auditorías de fiscalización ante requerimientos o revisiones voluntarias UGPP.</p>
+                                <ul class="list-disc pl-4 space-y-1.5 text-slate-600 font-medium text-[11px]">
+                                    <li><strong>Matemática Comercial:</strong> Se estandariza cada mes en 30 días exactos para evitar distorsiones.</li>
+                                    <li><strong>Auxilio de Transporte Incorporado:</strong> Sumado automáticamente en la base si aplica por topes.</li>
+                                    <li><strong>Vacaciones Proporcionales:</strong> Calculadas automáticamente a razón de 15 días por año.</li>
+                                </ul>
+                            </div>
+                            <div class="grid grid-cols-2 gap-4 mt-6">
+                                <button type="button" onclick="guardarLiquidacionEnLocalStorage()" class="bg-emerald-600 text-white font-black text-xs py-3 rounded-xl hover:bg-emerald-700 shadow transition-all uppercase">
+                                    💾 Archivar Liquidación
+                                </button>
+                                <button type="button" onclick="imprimirColillaLiquidacionDirecta()" class="bg-indigo-600 text-white font-black text-xs py-3 rounded-xl hover:bg-indigo-700 shadow transition-all uppercase">
+                                    🖨️ Imprimir Acta de Liquidación
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-xs space-y-3">
+                        <h3 class="text-xs font-black text-slate-700 uppercase tracking-wider border-b pb-1">Historial de Liquidaciones Archivadas</h3>
+                        <div class="overflow-x-auto">
+                            <table class="w-full text-left text-xs border-collapse">
+                                <thead class="bg-slate-50 border-b border-slate-200">
+                                    <tr>
+                                        <th class="p-2.5 font-bold text-slate-600 uppercase tracking-wide">Trabajador</th>
+                                        <th class="p-2.5 font-bold text-slate-600 uppercase tracking-wide">Período de Vínculo</th>
+                                        <th class="p-2.5 font-bold text-slate-600 text-center uppercase tracking-wide">Días</th>
+                                        <th class="p-2.5 font-bold text-slate-600 text-right uppercase tracking-wide">Total Liquidado</th>
+                                        <th class="p-2.5 font-bold text-slate-600 text-center uppercase tracking-wide">Acciones</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="tbodyLiquidacionesHistorico" class="divide-y font-medium text-slate-700"></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="content-history" class="hidden no-print">
+            <div class="mb-4 flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+                <div>
+                    <h2 class="text-xl font-bold text-slate-900 tracking-tight">Historial de Nóminas Almacenadas</h2>
+                    <p class="text-xs text-slate-500">Registros persistidos localmente a través de `localStorage` para auditorías.</p>
+                </div>
+                <button type="button" onclick="exportarBaseDatosACSV()" class="bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs py-2.5 px-4 rounded-xl shadow-md flex items-center gap-2 transition-all uppercase tracking-wider">
+                    📊 Exportar Reporte Consolidado (Excel/CSV)
+                </button>
+            </div>
+            <div class="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
+                <table class="w-full text-left text-xs border-collapse">
+                    <thead class="bg-slate-50 border-b border-slate-200">
+                        <tr>
+                            <th class="p-3 font-bold text-slate-700 uppercase tracking-wider">Cédula</th>
+                            <th class="p-3 font-bold text-slate-700 uppercase tracking-wider">Nombre</th>
+                            <th class="p-3 font-bold text-slate-700 uppercase tracking-wider">Total Devengado</th>
+                            <th class="p-3 font-bold text-slate-700 uppercase tracking-wider">Neto Pagado</th>
+                            <th class="p-3 font-bold text-slate-700 uppercase tracking-wider">Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tbodyHistorico" class="divide-y divide-slate-100 font-medium"></tbody>
+                </table>
+            </div>
+        </section>
+
+        <section id="content-metrics" class="hidden no-print space-y-6">
+            <div>
+                <h2 class="text-xl font-black text-slate-900 tracking-tight uppercase">Módulo Analítico e Indicadores Estratégicos</h2>
+                <p class="text-xs text-slate-500">Métricas consolidadas en tiempo real basadas en auditorías de datos históricos acumulados.</p>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4">
+                <div class="bg-white p-4 rounded-2xl border border-slate-200 shadow-xs border-t-4 border-t-indigo-600">
+                    <span class="text-[10px] font-black uppercase text-slate-400 tracking-wider block">Nómina Total (Neto)</span>
+                    <div id="ind-neto-mensual" class="text-lg font-black text-indigo-600 mt-1">$0</div>
+                </div>
+                <div class="bg-white p-4 rounded-2xl border border-slate-200 shadow-xs border-t-4 border-t-slate-800">
+                    <span class="text-[10px] font-black uppercase text-slate-400 tracking-wider block">Costo Real Empresa</span>
+                    <div id="ind-costo-empresa" class="text-lg font-black text-slate-900 mt-1">$0</div>
+                </div>
+                <div class="bg-white p-4 rounded-2xl border border-slate-200 shadow-xs border-t-4 border-t-emerald-500">
+                    <span class="text-[10px] font-black uppercase text-slate-400 tracking-wider block">Total Aux. Transporte</span>
+                    <div id="ind-quincena" class="text-lg font-black text-emerald-600 mt-1">$0</div>
+                </div>
+                <div class="bg-white p-4 rounded-2xl border border-slate-200 shadow-xs border-t-4 border-t-amber-500">
+                    <span class="text-[10px] font-black uppercase text-slate-400 tracking-wider block">Gasto Horas Extras</span>
+                    <div id="ind-extras" class="text-lg font-black text-amber-600 mt-1">$0</div>
+                </div>
+                <div class="bg-white p-4 rounded-2xl border border-slate-200 shadow-xs border-t-4 border-t-teal-600">
+                    <span class="text-[10px] font-black uppercase text-slate-400 tracking-wider block">Gasto Prestaciones</span>
+                    <div id="ind-total-prestaciones" class="text-lg font-black text-teal-600 mt-1">$0</div>
+                </div>
+                <div class="bg-white p-4 rounded-2xl border border-slate-200 shadow-xs border-t-4 border-t-purple-600">
+                    <span class="text-[10px] font-black uppercase text-slate-400 tracking-wider block">Seguridad Soc. Patronal</span>
+                    <div id="ind-total-seg-patronal" class="text-lg font-black text-purple-600 mt-1">$0</div>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4">
+                <div class="bg-white p-4 rounded-2xl border border-slate-200 shadow-xs border-l-4 border-l-blue-500">
+                    <span class="text-[10px] font-black uppercase text-slate-400 tracking-wider block">Aporte Fijo CCF (4%)</span>
+                    <div id="ind-total-ccf" class="text-lg font-black text-blue-600 mt-1">$0</div>
+                </div>
+                <div class="bg-white p-4 rounded-2xl border border-slate-200 shadow-xs border-l-4 border-l-red-500">
+                    <span class="text-[10px] font-black uppercase text-slate-400 tracking-wider block">Costo ARL Consolidado</span>
+                    <div id="ind-total-arl" class="text-lg font-black text-red-600 mt-1">$0</div>
+                </div>
+                <div class="bg-white p-4 rounded-2xl border border-slate-200 shadow-xs border-l-4 border-l-orange-500">
+                    <span class="text-[10px] font-black uppercase text-slate-400 tracking-wider block">Rubros Operación</span>
+                    <div id="ind-total-operacionales" class="text-lg font-black text-orange-600 mt-1">$0</div>
+                </div>
+                <div class="bg-white p-4 rounded-2xl border border-slate-200 shadow-xs border-l-4 border-l-fuchsia-600">
+                    <span class="text-[10px] font-black uppercase text-slate-400 tracking-wider block">Promedio Hora Ordinaria</span>
+                    <div id="ind-promedio-vhora" class="text-lg font-black text-fuchsia-600 mt-1">$0</div>
+                </div>
+                <div class="bg-white p-4 rounded-2xl border border-slate-200 shadow-xs border-l-4 border-l-cyan-600">
+                    <span class="text-[10px] font-black uppercase text-slate-400 tracking-wider block">Turnos Planificados</span>
+                    <div id="ind-total-turnos" class="text-lg font-black text-cyan-600 mt-1">0</div>
+                </div>
+                <div class="bg-white p-4 rounded-2xl border border-slate-200 shadow-xs border-l-4 border-l-rose-600 bg-rose-50/10">
+                    <span class="text-[10px] font-black uppercase text-rose-600 tracking-wider block">Pasivo de Cierre Estimado</span>
+                    <div id="ind-pasivo-estimado" class="text-lg font-black text-rose-700 mt-1">$0</div>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-xs space-y-2">
+                    <span class="text-[10px] font-black uppercase text-slate-400 tracking-wider block">Impacto de Tiempos Extras</span>
+                    <div id="ind-pct-impacto-extras" class="text-3xl font-black text-amber-600">0%</div>
+                    <p class="text-[11px] text-slate-500 font-medium">Porcentaje del costo total devengado destinado al pago de horas suplementarias.</p>
+                </div>
+                <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-xs space-y-2">
+                    <span class="text-[10px] font-black uppercase text-slate-400 tracking-wider block">Costo Promedio por Colaborador</span>
+                    <div id="ind-costo-promedio-persona" class="text-3xl font-black text-indigo-700">$0</div>
+                    <p class="text-[11px] text-slate-500 font-medium">Inversión promedio de la compañía por cada ficha activa.</p>
+                </div>
+                <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-xs space-y-2">
+                    <span class="text-[10px] font-black uppercase text-slate-400 tracking-wider block">Gasto de Turnos por Tipo de Jornada</span>
+                    <div class="text-[11px] font-semibold space-y-1 pt-1 text-slate-600">
+                        <div class="flex justify-between"><span>Recargos Nocturnos Brutos:</span><strong id="ind-desglose-rn" class="text-slate-800">$0</strong></div>
+                        <div class="flex justify-between"><span>Extras Diurnas / Nocturnas:</span><strong id="ind-desglose-hed" class="text-slate-800">$0</strong></div>
+                        <div class="flex justify-between"><span>Recargos Dominicales / Festivos:</span><strong id="ind-desglose-dom" class="text-indigo-600">$0</strong></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-xs space-y-4">
+                    <h4 class="text-xs font-black text-slate-600 uppercase tracking-wider border-b pb-2">Distribución de Carga del Costo Empresa</h4>
+                    <div class="space-y-3 text-xs" id="box-grafico-pesos"></div>
+                </div>
+
+                <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-xs space-y-4">
+                    <h4 class="text-xs font-black text-slate-600 uppercase tracking-wider border-b pb-2">Indicadores de Ausentismo y Novedades</h4>
+                    <div class="grid grid-cols-2 gap-4">
+                        <div class="bg-amber-50/60 p-4 rounded-xl border border-amber-100 text-center">
+                            <span class="text-[10px] font-black text-amber-700 uppercase tracking-wider block">Días de Incapacidad</span>
+                            <div id="ind-total-incap" class="text-3xl font-black text-amber-600 mt-1">0</div>
+                        </div>
+                        <div class="bg-sky-50/60 p-4 rounded-xl border border-sky-100 text-center">
+                            <span class="text-[10px] font-black text-sky-700 uppercase tracking-wider block">Vacaciones Disfrutadas</span>
+                            <div id="ind-total-vac" class="text-3xl font-black text-sky-600 mt-1">0</div>
+                        </div>
+                    </div>
+                    <div class="bg-slate-50 p-3 rounded-xl border text-[11px] font-medium space-y-1">
+                        <div class="flex justify-between"><span>Total Colaboradores Registrados:</span><strong id="ind-total-personas" class="text-slate-800">0</strong></div>
+                        <div class="flex justify-between"><span>Promedio Salario Básico:</span><strong id="ind-promedio-salario" class="text-indigo-600">$0</strong></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="printArea" class="hidden bg-white p-8 rounded-3xl border border-slate-300 print-area max-w-4xl mx-auto shadow-2xl my-4">
+            <div class="flex justify-between items-center border-b-2 border-slate-900 pb-4 mb-4">
+                <div>
+                    <h2 class="text-xl font-black uppercase text-slate-900 tracking-tight" id="print-titulo-modulo">Comprobante de Pago, Reporte de Turnos</h2>
+                    <p class="text-xs text-slate-500 font-semibold">Liquidación de Prestaciones y Costeo Total de Empresa (Año 2026)</p>
+                </div>
+                <div class="bg-white p-1 rounded border shadow-sm max-w-[240px]">
+                    <img src="logo_web.png" alt="Logo Nómina Segura Auditoría" class="h-20 w-auto object-contain" onerror="console.log('Error al cargar el logo en impresión.');">
+                </div>
+            </div>
+
+            <div id="htmlComprobante" class="text-xs space-y-5"></div>
+
+            <div class="flex justify-end gap-3 mt-8 no-print">
+                <button onclick="window.print()" class="bg-indigo-600 text-white font-bold text-xs py-2.5 px-6 rounded-xl shadow hover:bg-indigo-700 transition-colors">
+                    Imprimir Comprobante Oficial / Exportar PDF
+                </button>
+                <button onclick="document.getElementById('printArea').classList.add('hidden');" class="bg-slate-200 text-slate-700 font-bold text-xs py-2.5 px-4 rounded-xl hover:bg-slate-300 transition-colors">
+                    Cerrar Vista de Comprobante
+                </button>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="bg-slate-900 text-slate-500 py-4 text-center text-xs mt-12 border-t border-slate-800 no-print">
+        <p>© 2026 Nómina Segura Auditoría. Costeo de Operaciones Bajo Normas de Fiscalización UGPP.</p>
+    </footer>
+
+    <script>
+        const MULTIPLICADORES = { RN: 0.35, HED: 1.25, HEN: 1.75, DYFLD: 1.80, DYFLN: 2.10, HEFD: 2.00, HEFN: 2.50 };
+        let OBJETO_LIQUIDACION_GLOBAL = null;
+
+        function switchTab(tabId) {
+            document.getElementById('content-simulator').classList.add('hidden');
+            document.getElementById('content-settlement').classList.add('hidden');
+            document.getElementById('content-history').classList.add('hidden');
+            document.getElementById('content-metrics').classList.add('hidden');
+            
+            document.getElementById('content-' + tabId).classList.remove('hidden');
+
+            document.querySelectorAll('nav button').forEach(b => {
+                b.className = "px-3 py-2 font-bold rounded-lg text-slate-300 hover:text-white transition-all";
+            });
+            document.getElementById('tab-' + tabId).className = "px-3 py-2 font-bold rounded-lg bg-indigo-600 text-white shadow transition-all";
+
+            if (tabId === 'history') cargarTablaHistorico();
+            if (tabId === 'metrics') calcularYRenderizarIndicadores();
+            if (tabId === 'settlement') {
+                inicializarOpcionesEmpleadosLiquidacion();
+                sincronizarEspejoLiquidacion();
+                cargarTablaLiquidacionesHistorico();
+            }
+        }
+
+        function formatCOP(v) {
+            return new Intl.NumberFormat('es-CO', { style: 'currency', currency: 'COP', maximumFractionDigits: 0 }).format(v);
+        }
+
+        function toggleConfigPanel() {
+            const el = document.getElementById('cuerpo-configuracion');
+            const btn = document.getElementById('btn-toggle-cfg');
+            if(el.classList.contains('hidden')) {
+                el.classList.remove('hidden');
+                btn.innerText = "▲ Colapsar Parámetros";
+            } else {
+                el.classList.add('hidden');
+                btn.innerText = "▼ Desplegar Parámetros";
+            }
+        }
+
+        function calcularDiasComercialesCST(fechaInicio, fechaFin) {
+            let f1 = new Date(fechaInicio);
+            let f2 = new Date(fechaFin);
+            let d1 = f1.getDate();
+            let m1 = f1.getMonth() + 1;
+            let y1 = f1.getFullYear();
+            let d2 = f2.getDate();
+            let m2 = f2.getMonth() + 1;
+            let y2 = f2.getFullYear();
+            if (d1 === 31) d1 = 30;
+            if (d2 === 31) d2 = 30;
+            if (m1 === 2 && d1 >= 28) d1 = 30;
+            if (m2 === 2 && d2 >= 28) d2 = 30;
+            let dias = (y2 - y1) * 360 + (m2 - m1) * 30 + (d2 - d1) + 1;
+            return Math.max(1, dias);
+        }
+
+        function sincronizarEspejoLiquidacion() {
+            const valSalarioLiq = parseFloat(document.getElementById('liq-salario-base').value) || 0;
+            document.getElementById('lbl-mirror-liq-salario').innerText = "Miles: " + formatCOP(valSalarioLiq);
+        }
+
+        // LÓGICA REESTRUCTURADA: SE BASA EN SALARIO MENSUAL Y CALCULA EL PERIODO
+        function realizarCalculosNominaCompleta() {
+            const smmlv = parseFloat(document.getElementById('cfg-smmlv').value);
+            const auxt_legal = parseFloat(document.getElementById('cfg-auxt').value);
+            const uvt = parseFloat(document.getElementById('cfg-uvt').value);
+            const arlRate = parseFloat(document.getElementById('cfg-arl').value);
+
+            const f_dotacion = parseFloat(document.getElementById('cfg-p-dotacion').value);
+            const f_epp = parseFloat(document.getElementById('cfg-p-epp').value);
+            const f_medicos = parseFloat(document.getElementById('cfg-p-medicos').value);
+            const f_fic = parseFloat(document.getElementById('cfg-p-fic').value);
+
+            const f_cesantias = parseFloat(document.getElementById('cfg-p-cesantias').value);
+            const f_prima = parseFloat(document.getElementById('cfg-p-prima').value);
+            const f_vacaciones = parseFloat(document.getElementById('cfg-p-vacaciones').value);
+
+            const aplicarExoneracion = document.getElementById('chk-exoneracion-impuestos').checked;
+
+            // EL USUARIO DIGITA EL SALARIO BASE MENSUAL
+            const periodicidad = parseInt(document.getElementById('inp-periodicidad').value) || 30;
+            const salarioBaseMensual = parseFloat(document.getElementById('inp-salario').value) || 0;
+            const salarioPeriodo = (salarioBaseMensual / 30) * periodicidad;
+
+            const incap = parseInt(document.getElementById('inp-incap').value) || 0;
+            const vac = parseInt(document.getElementById('inp-vac').value) || 0;
+            const otrasDeducciones = parseFloat(document.getElementById('inp-otras-ded').value) || 0;
+
+            const horasCalculadas = {
+                rn: parseFloat(document.getElementById('inp-rn').value) || 0,
+                hed: parseFloat(document.getElementById('inp-hed').value) || 0,
+                hen: parseFloat(document.getElementById('inp-hen').value) || 0,
+                dyfld: parseFloat(document.getElementById('inp-dyfld').value) || 0,
+                dyfln: parseFloat(document.getElementById('inp-dyfln').value) || 0,
+                hefd: parseFloat(document.getElementById('inp-hefd').value) || 0,
+                hefn: parseFloat(document.getElementById('inp-hefn').value) || 0
+            };
+
+            const valorHora = salarioBaseMensual / 210; 
+
+            const v_rn = horasCalculadas.rn * (valorHora * MULTIPLICADORES.RN);
+            const v_hed = horasCalculadas.hed * (valorHora * MULTIPLICADORES.HED);
+            const v_hen = horasCalculadas.hen * (valorHora * MULTIPLICADORES.HEN);
+            const v_dyfld = horasCalculadas.dyfld * (valorHora * MULTIPLICADORES.DYFLD);
+            const v_dyfln = horasCalculadas.dyfln * (valorHora * MULTIPLICADORES.DYFLN);
+            const v_hefd = horasCalculadas.hefd * (valorHora * MULTIPLICADORES.HEFD);
+            const v_hefn = horasCalculadas.hefn * (valorHora * MULTIPLICADORES.HEFN);
+            const totalExtrasMonetarias = v_rn + v_hed + v_hen + v_dyfld + v_dyfln + v_hefd + v_hefn;
+
+            const diasPeriodo = periodicidad;
+            const diasEfectivos = Math.max(0, diasPeriodo - incap - vac);
+            
+            const devengoSueldoBase = (salarioBaseMensual / 30) * diasEfectivos;
+            const devengoIncapacidad = (incap > 0) ? ((salarioBaseMensual / 30) * incap * 0.6667) : 0;
+            const devengoVacaciones = (vac > 0) ? ((salarioBaseMensual / 30) * vac) : 0;
+
+            const diasAsistidosReales = Math.max(0, diasPeriodo - incap - vac);
+            const devengoAuxTransporte = (salarioBaseMensual <= (smmlv * 2)) ? ((auxt_legal / 30) * diasAsistidosReales) : 0;
+
+            const totalDevengado = devengoSueldoBase + devengoIncapacidad + devengoVacaciones + totalExtrasMonetarias + devengoAuxTransporte;
+            const ibc = totalDevengado - devengoAuxTransporte;
+
+            const saludObrera = ibc * 0.04;
+            const pensionObrera = ibc * 0.04;
+            
+            // FSP y Retefuente requieren calcularse en base mensual y luego proporcionar al periodo
+            const ibc_mensualizado = (ibc / diasPeriodo) * 30;
+            const fsp = (ibc_mensualizado >= (smmlv * 4)) ? (ibc * 0.01) : 0;
+            
+            let retencionFuente = 0;
+            const subtotalReteMensual = ibc_mensualizado - (ibc_mensualizado*0.04) - (ibc_mensualizado*0.04) - ((ibc_mensualizado >= (smmlv*4)) ? ibc_mensualizado*0.01 : 0);
+            const baseGravableRete = subtotalReteMensual * 0.75; 
+            const baseUvt = baseGravableRete / uvt;
+            if (baseUvt > 95) {
+                const reteMensual = ((baseUvt - 95) * 0.19) * uvt;
+                retencionFuente = (reteMensual / 30) * diasPeriodo; 
+            }
+
+            const deduccionesTotales = saludObrera + pensionObrera + fsp + retencionFuente + otrasDeducciones;
+            const netoPagar = totalDevengado - deduccionesTotales;
+
+            const provisionCesantias = totalDevengado * f_cesantias;
+            const provisionIntCesantias = provisionCesantias * 0.12; 
+            const provisionPrima = totalDevengado * f_prima;
+            const provisionVacaciones = devengoSueldoBase * f_vacaciones; 
+
+            const pensionPatronal = ibc * 0.12;
+            const saludPatronal = (aplicarExoneracion && salarioBaseMensual < (smmlv * 10)) ? 0 : (ibc * 0.085);
+            const arlDinamico = ibc * arlRate; 
+            const parafiscales = (aplicarExoneracion && salarioBaseMensual < (smmlv * 10)) ? 0 : (ibc * 0.05);
+
+            const liquidacionCajaCompensacion = ibc * 0.04;
+
+            const rubroDotacion = ibc * f_dotacion;
+            const rubroEpp = ibc * f_epp;
+            const rubroMedicos = ibc * f_medicos;
+            const rubroFic = ibc * f_fic;
+
+            const costoTotalEmpresa = totalDevengado + provisionCesantias + provisionIntCesantias + provisionPrima + provisionVacaciones + pensionPatronal + saludPatronal + arlDinamico + parafiscales + liquidacionCajaCompensacion + rubroDotacion + rubroEpp + rubroMedicos + rubroFic;
+
+            const qTurnos = diasPeriodo; 
+
+            return {
+                salario: salarioBaseMensual, salarioPeriodo, incap, vac, totalExtrasMonetarias, valorHora, devengoSueldoBase, devengoIncapacidad, devengoVacaciones, devengoAuxTransporte, totalDevengado, ibc,
+                saludObrera, pensionObrera, fsp, retencionFuente, otrasDeducciones, deduccionesTotales, netoPagar, qTurnos, periodicidad,
+                horasCalculadas, desglosePesos: { v_rn, v_hed, v_hen, v_dyfld, v_dyfln, v_hefd, v_hefn },
+                prestaciones: { cesantias: provisionCesantias, intCesantias: provisionIntCesantias, prima: provisionPrima, vacaciones: provisionVacaciones },
+                patronal: { salud: saludPatronal, pension: pensionPatronal, arl: arlDinamico, parafiscales, ccf: liquidacionCajaCompensacion, total: costoTotalEmpresa, dotacion: rubroDotacion, epp: rubroEpp, fic: rubroFic, medicos: rubroMedicos, exonerado: (aplicarExoneracion && salarioBaseMensual < (smmlv * 10)) }
+            };
+        }
+
+        function sincronizarCalculosEnVivo() {
+            const r = realizarCalculosNominaCompleta();
+            const smmlv2026 = 1750905; 
+
+            const uvt = parseFloat(document.getElementById('cfg-uvt').value);
+            const smmlv = parseFloat(document.getElementById('cfg-smmlv').value);
+
+            const valSmmlv = parseFloat(document.getElementById('cfg-smmlv').value) || 0;
+            const valAuxt = parseFloat(document.getElementById('cfg-auxt').value) || 0;
+            const valUvt = parseFloat(document.getElementById('cfg-uvt').value) || 0;
+            const valOtrasDed = parseFloat(document.getElementById('inp-otras-ded').value) || 0;
+
+            document.getElementById('lbl-mirror-smmlv').innerText = formatCOP(valSmmlv);
+            document.getElementById('lbl-mirror-auxt').innerText = formatCOP(valAuxt);
+            document.getElementById('lbl-mirror-uvt').innerText = formatCOP(valUvt);
+            
+            document.getElementById('lbl-mirror-salario').innerText = formatCOP(r.salario) + " (Base Mes)";
+            document.getElementById('lbl-salario-periodo').innerText = formatCOP(r.salarioPeriodo);
+
+            document.getElementById('lbl-mirror-otras-ded').innerText = formatCOP(valOtrasDed);
+            document.getElementById('prev-otras-ded-consola').innerText = formatCOP(r.otrasDeducciones);
+
+            document.getElementById('lbl-v-rn').innerText = formatCOP(r.desglosePesos.v_rn);
+            document.getElementById('lbl-v-hed').innerText = formatCOP(r.desglosePesos.v_hed);
+            document.getElementById('lbl-v-hen').innerText = formatCOP(r.desglosePesos.v_hen);
+            document.getElementById('lbl-v-dom').innerText = formatCOP(r.desglosePesos.v_dyfld + r.desglosePesos.v_dyfln + r.desglosePesos.v_hefd + r.desglosePesos.v_hefn);
+
+            //document.getElementById('prev-vhora').innerText = formatCOP(r.valorHora) + " / h";
+            // Actualización de los devengos por separado
+            document.getElementById('prev-sueldo').innerText = formatCOP(r.devengoSueldoBase);
+            document.getElementById('prev-incap').innerText = formatCOP(r.devengoIncapacidad);
+            document.getElementById('prev-vac').innerText = formatCOP(r.devengoVacaciones);
+
+            document.getElementById('prev-auxt').innerText = formatCOP(r.devengoAuxTransporte);
+
+            document.getElementById('prev-sueldo').innerText = formatCOP(r.devengoSueldoBase + r.devengoIncapacidad + r.devengoVacaciones);
+            document.getElementById('prev-auxt').innerText = formatCOP(r.devengoAuxTransporte);
+            document.getElementById('prev-extras').innerText = formatCOP(r.totalExtrasMonetarias);
+            document.getElementById('prev-total-dev').innerText = formatCOP(r.totalDevengado);
+            document.getElementById('prev-salud').innerText = formatCOP(r.saludObrera);
+            document.getElementById('prev-pension').innerText = formatCOP(r.pensionObrera);
+            document.getElementById('prev-fsp').innerText = formatCOP(r.fsp);
+            document.getElementById('prev-retefuente').innerText = formatCOP(r.retencionFuente);
+            document.getElementById('prev-neto').innerText = formatCOP(r.netoPagar);
+
+            document.getElementById('prev-p-prima').innerText = formatCOP(r.prestaciones.prima);
+            document.getElementById('prev-p-cesantias').innerText = formatCOP(r.prestaciones.cesantias);
+            document.getElementById('prev-p-intces').innerText = formatCOP(r.prestaciones.intCesantias);
+            document.getElementById('prev-p-vacaciones').innerText = formatCOP(r.prestaciones.vacaciones);
+
+            document.getElementById('prev-pat-pension').innerText = formatCOP(r.patronal.pension);
+            document.getElementById('prev-pat-salud').innerText = formatCOP(r.patronal.salud) + (r.patronal.exonerado ? " (Exonerado)" : "");
+            document.getElementById('prev-pat-parafiscales').innerText = formatCOP(r.patronal.parafiscales) + (r.patronal.exonerado ? " (Exonerado)" : "");
+            
+            document.getElementById('prev-pat-ccf').innerText = formatCOP(r.patronal.ccf);
+            
+            document.getElementById('prev-pat-arl').innerText = formatCOP(r.patronal.arl);
+            document.getElementById('prev-pat-otros').innerText = formatCOP(r.patronal.dotacion + r.patronal.epp + r.patronal.medicos + r.patronal.fic);
+            document.getElementById('prev-costo-total-empresa').innerText = formatCOP(r.patronal.total);
+
+            const panel = document.getElementById('panelAlertas');
+            const btnArchivar = document.querySelector('button[onclick="guardarDatosEnLocalStorage()"]');
+
+            panel.innerHTML = "";
+
+            if (r.retencionFuente > 0) {
+                panel.innerHTML += `
+                    <div class="bg-red-50 border-l-4 border-red-600 p-3 rounded text-red-900 text-xs font-semibold shadow-sm flex items-start gap-2">
+                        <span>🚀</span>
+                        <div><strong>Retención en la Fuente (Art. 383 E.T.):</strong> El ingreso excede los límites exentos de ley. Descuento: <strong>${formatCOP(r.retencionFuente)}</strong>.</div>
+                    </div>`;
+            }
+            if ((r.ibc / r.periodicidad * 30) >= (smmlv * 4)) {
+                panel.innerHTML += `
+                    <div class="bg-rose-50 border-l-4 border-rose-500 p-3 rounded text-rose-900 text-xs font-semibold shadow-sm flex items-start gap-2">
+                        <span>🏛️</span>
+                        <div><strong>FSP Activo (>= 4 SMMLV):</strong> Se liquida deducción obligatoria para el Fondo de Solidaridad Pensional sobre la base de sueldo proporcional.</div>
+                    </div>`;
+            }
+            if (r.patronal.exonerado) {
+                panel.innerHTML += `
+                    <div class="bg-emerald-50 border-l-4 border-emerald-500 p-3 rounded text-emerald-900 text-xs font-semibold shadow-sm flex items-start gap-2">
+                        <span>✅</span>
+                        <div><strong>Exoneración Activa (Ley 1607):</strong> Empleador exento de cotizar Salud, SENA e ICBF. La Caja de Compensación (4%) se mantiene obligatoria.</div>
+                    </div>`;
+            }
+
+            if (r.netoPagar < (smmlv2026 / 30 * r.periodicidad)) {
+                panel.innerHTML += `
+                    <div class="bg-red-600 text-white p-4 rounded-xl border border-red-800 font-black shadow-lg mb-4 animate-pulse">
+                        ⚠️ ALERTA: El Neto a Pagar (${formatCOP(r.netoPagar)}) es inferior al mínimo vital proporcional a ${r.periodicidad} días (${formatCOP(smmlv2026 / 30 * r.periodicidad)}).
+                    </div>`;
+            }
+
+            btnArchivar.disabled = false;
+            btnArchivar.classList.remove('opacity-50', 'cursor-not-allowed');
+        }
+
+        function guardarDatosEnLocalStorage() {
+            const cedula = document.getElementById('inp-cedula').value;
+            const nombre = document.getElementById('inp-nombre').value;
+            
+            // Obtenemos el valor del SMMLV dinámicamente desde la configuración actual
+            const smmlvConfig = parseFloat(document.getElementById('cfg-smmlv').value);
+
+            if(!cedula || !nombre) return alert("Por favor, digite la Cédula y el Nombre Completo.");
+
+            // Recalculamos para obtener los valores actuales
+            const res = realizarCalculosNominaCompleta();
+            
+            // Calculamos el mínimo vital proporcional al periodo de la ficha
+            const minimoVitalProporcional = (smmlvConfig / 30) * res.periodicidad;
+
+            // --- CANDADO DE SEGURIDAD ---
+            // Si el Neto a Pagar es inferior al mínimo vital, bloqueamos el guardado
+            if (res.netoPagar < minimoVitalProporcional) {
+                alert(`⚠️ BLOQUEO DE SEGURIDAD: No es posible archivar.\n\nEl Neto a Pagar (${formatCOP(res.netoPagar)}) es inferior al mínimo vital proporcional (${formatCOP(minimoVitalProporcional)}).\n\nPor favor, revise las deducciones o el salario del trabajador.`);
+                return; // Detiene la ejecución, la ficha NO se guarda
+            }
+            // ----------------------------
+
+            const alertasVisibles = Array.from(document.querySelectorAll('#panelAlertas > div')).map(el => el.innerText);
+            const record = { cedula, nombre, ...res, alertasHistorial: alertasVisibles };
+
+            let db = JSON.parse(localStorage.getItem('db_carla_turnos_2026')) || [];
+            db = db.filter(emp => emp.cedula !== cedula);
+            db.push(record);
+            localStorage.setItem('db_carla_turnos_2026', JSON.stringify(db));
+
+            alert(`Ficha de ${nombre} archivada correctamente.`);
+            
+            // Reseteo del formulario
+            document.getElementById('formFormulario').reset();
+            ['rn', 'hed', 'hen', 'dyfld', 'dyfln', 'hefd', 'hefn'].forEach(id => {
+                document.getElementById('inp-' + id).value = 0;
+            });
+            document.getElementById('panelAlertas').innerHTML = "";
+            sincronizarCalculosEnVivo();
+        }
+
+        function cargarTablaHistorico() {
+            const db = JSON.parse(localStorage.getItem('db_carla_turnos_2026')) || [];
+            const tbody = document.getElementById('tbodyHistorico');
+            tbody.innerHTML = "";
+
+            if(db.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="5" class="p-4 text-center text-slate-400">No hay nóminas registradas.</td></tr>`;
+                return;
+            }
+
+            db.forEach(emp => {
+                tbody.innerHTML += `
+                    <tr class="hover:bg-slate-50 border-b text-slate-700">
+                        <td class="p-3 font-bold text-slate-900">${emp.cedula}</td>
+                        <td class="p-3 font-medium">${emp.nombre}</td>
+                        <td class="p-3 text-emerald-600 font-semibold">${formatCOP(emp.totalDevengado)}</td>
+                        <td class="p-3 font-extrabold text-slate-900">${formatCOP(emp.netoPagar)}</td>
+                        <td class="p-3 flex gap-2">
+                            <button type="button" onclick="imprimirColillaCarla('${emp.cedula}')" class="bg-indigo-600 text-white font-bold text-[10px] px-3 py-1.5 rounded-lg shadow-sm hover:bg-indigo-700 transition-colors">Generar Comprobante</button>
+                            <button type="button" onclick="eliminarRegistroNomina('${emp.cedula}', '${emp.nombre}')" class="bg-rose-600 text-white font-bold text-[10px] px-3 py-1.5 rounded-lg shadow-sm hover:bg-rose-700 transition-colors">Eliminar</button>
+                        </td>
+                    </tr>
+                `;
+            });
+        }
+
+        function eliminarRegistroNomina(cedula, nombre) {
+            if (!confirm(`¿Estás seguro de que deseas eliminar permanentemente el registro de ${nombre} (C.C. ${cedula})?`)) {
+                return; 
+            }
+            let db = JSON.parse(localStorage.getItem('db_carla_turnos_2026')) || [];
+            db = db.filter(emp => emp.cedula !== cedula);
+            localStorage.setItem('db_carla_turnos_2026', JSON.stringify(db));
+            cargarTablaHistorico();
+            alert(`El registro de ${nombre} ha sido eliminado correctamente.`);
+        }
+
+        function poolMotivoTexto(m) {
+            if (m === 'voluntario') return 'Renuncia/Acuerdo';
+            if (m === 'justa_causa') return 'Justa Causa';
+            return 'Sin Justa Causa';
+        }
+
+        function inicializarOpcionesEmpleadosLiquidacion() {
+            const db = JSON.parse(localStorage.getItem('db_carla_turnos_2026')) || [];
+            const select = document.getElementById('liq-select-empleado');
+            select.innerHTML = `<option value="">-- Seleccionar Empleado Archivando --</option>`;
+            db.forEach(emp => {
+                select.innerHTML += `<option value="${emp.cedula}">${emp.nombre} (C.C. ${emp.cedula})</option>`;
+            });
+        }
+
+        function cargarEmpleadoParaLiquidar() {
+            const cedula = document.getElementById('liq-select-empleado').value;
+            if(!cedula) return;
+            const db = JSON.parse(localStorage.getItem('db_carla_turnos_2026')) || [];
+            const emp = db.find(e => e.cedula === cedula);
+            if(emp) {
+                document.getElementById('liq-salario-base').value = Math.round(emp.salario || 0);
+                sincronizarEspejoLiquidacion();
+            }
+        }
+
+        function calcularLiquidacionTotalContrato() {
+            const salarioBaseInput = parseFloat(document.getElementById('liq-salario-base').value) || 0;
+            const motivo = document.getElementById('liq-motivo').value;
+            const fIngresoVal = document.getElementById('liq-f-ingreso').value;
+            const fRetiroVal = document.getElementById('liq-f-retiro').value;
+            const vacDisfrutadas = parseFloat(document.getElementById('liq-vac-disfrutadas').value) || 0;
+            const smmlv = parseFloat(document.getElementById('cfg-smmlv').value) || 1750905;
+            const auxt_legal = parseFloat(document.getElementById('cfg-auxt').value) || 249095;
+
+            const bonosCierre = parseFloat(document.getElementById('liq-bonos').value) || 0;
+            const prestamosDeduccion = parseFloat(document.getElementById('liq-prestamos').value) || 0;
+
+            const selectEmpleado = document.getElementById('liq-select-empleado');
+            const nombreEmpleado = selectEmpleado.selectedIndex > 0 ? selectEmpleado.options[selectEmpleado.selectedIndex].text : "Trabajador Externo";
+            const cedulaEmpleado = selectEmpleado.value || "S/N";
+
+            if (!fIngresoVal || !fRetiroVal) {
+                return alert("Por favor, ingrese fechas de contratación válidas.");
+            }
+
+            const totalDias = calcularDiasComercialesCST(fIngresoVal, fRetiroVal);
+
+            if (totalDias <= 0) {
+                return alert("La fecha de retiro debe ser superior a la fecha de ingreso.");
+            }
+
+            const incluyeAuxilioTransporte = (salarioBaseInput <= (smmlv * 2));
+            const basePrestaciones = incluyeAuxilioTransporte ? (salarioBaseInput + auxt_legal) : salarioBaseInput;
+            const baseVacaciones = salarioBaseInput;
+
+            const fechaRetiroObj = new Date(fRetiroVal);
+            const anioRetiro = fechaRetiroObj.getFullYear();
+            const esSegundoSemestre = (fechaRetiroObj.getMonth() + 1) > 6;
+            const fechaInicioSemestre = esSegundoSemestre ? `${anioRetiro}-07-01` : `${anioRetiro}-01-01`;
+            
+            let diasPrimaSemestre = calcularDiasComercialesCST(fechaInicioSemestre, fRetiroVal);
+            if (new Date(fIngresoVal) > new Date(fechaInicioSemestre)) {
+                diasPrimaSemestre = totalDias;
+            }
+
+            const totalVacacionesDerecho = (15 * totalDias) / 360;
+            const diasVacPendientes = Math.max(0, totalVacacionesDerecho - vacDisfrutadas);
+
+            const liquidacionCesantias = (basePrestaciones * totalDias) / 360;
+            const liquidacionIntCesantias = (liquidacionCesantias * totalDias * 0.12) / 360;
+            const liquidacionPrima = (basePrestaciones * diasPrimaSemestre) / 360;
+            const liquidacionVacaciones = (baseVacaciones * diasVacPendientes) / 360;
+
+            let liquidacionIndemnizacion = 0;
+            if (motivo === 'injusta_causa') {
+                if (totalDias <= 360) {
+                    liquidacionIndemnizacion = (salarioBaseInput / 30) * 30;
+                } else {
+                    const diasSubsiguientes = totalDias - 360;
+                    liquidacionIndemnizacion = salarioBaseInput + ((salarioBaseInput / 30) * (20 * (diasSubsiguientes / 360)));
+                }
+            }
+
+            const totalNetoLiquidacion = liquidacionCesantias + liquidacionIntCesantias + liquidacionPrima + liquidacionVacaciones + liquidacionIndemnizacion + bonosCierre - prestamosDeduccion;
+
+            OBJETO_LIQUIDACION_GLOBAL = {
+                cedula: cedulaEmpleado, nombre: nombreEmpleado, motivo: motivo,
+                salarioBase: salarioBaseInput, totalDias, diasPrimaSemestre, totalVacacionesDerecho, diasVacPendientes, vacDisfrutadas,
+                liquidacionCesantias, liquidacionIntCesantias, liquidacionPrima, liquidacionVacaciones, liquidacionIndemnizacion,
+                bonosCierre, prestamosDeduccion, totalNetoLiquidacion,
+                fIngreso: fIngresoVal, fRetiro: fRetiroVal
+            };
+
+            document.getElementById('formula-cesantias').innerText = `Fórmula: (${formatCOP(basePrestaciones)} * ${totalDias} días) / 360`;
+            document.getElementById('formula-intces').innerText = `Fórmula: (${formatCOP(liquidacionCesantias)} * ${totalDias} días * 12%) / 360`;
+            document.getElementById('formula-prima').innerText = `Fórmula: (${formatCOP(basePrestaciones)} * ${diasPrimaSemestre} días) / 360`;
+            document.getElementById('formula-vacaciones').innerText = `Fórmula: (${formatCOP(baseVacaciones)} * ${diasVacPendientes.toFixed(2)} días pendientes) / 360`;
+
+            document.getElementById('liq-out-dias-totales').innerText = totalDias + " días totales laborados";
+            document.getElementById('liq-out-dias-prima').innerText = diasPrimaSemestre + " días";
+            document.getElementById('liq-out-total-vac-derecho').innerText = totalVacacionesDerecho.toFixed(2) + " días";
+            document.getElementById('liq-out-dias-vac-calculadas').innerText = diasVacPendientes.toFixed(2) + " días";
+            
+            document.getElementById('liq-out-cesantias').innerText = formatCOP(liquidacionCesantias);
+            document.getElementById('liq-out-intces').innerText = formatCOP(liquidacionIntCesantias);
+            document.getElementById('liq-out-prima').innerText = formatCOP(liquidacionPrima);
+            document.getElementById('liq-out-vacaciones').innerText = formatCOP(liquidacionVacaciones);
+            
+            document.getElementById('liq-out-bonos').innerText = formatCOP(bonosCierre);
+            document.getElementById('liq-out-prestamos').innerText = formatCOP(prestamosDeduccion);
+            
+            document.getElementById('liq-out-indemnizacion').innerText = formatCOP(liquidacionIndemnizacion);
+            document.getElementById('liq-out-total-neto').innerText = formatCOP(totalNetoLiquidacion);
+
+            const alertBox = document.getElementById('panelAlertasLiquidacion');
+            alertBox.innerHTML = "";
+            if(incluyeAuxilioTransporte) {
+                alertBox.innerHTML += `
+                    <div class="bg-indigo-50 border-l-4 border-indigo-600 p-2.5 rounded text-indigo-950 text-xs font-semibold shadow-2xs">
+                        🚩 <strong>Base Incrementada:</strong> Se incorporaron ${formatCOP(auxt_legal)} de Auxilio de Transporte a la base de Primas y Cesantías por no superar los 2 SMMLV de ley.
+                    </div>`;
+            }
+            if(motivo === 'injusta_causa') {
+                alertBox.innerHTML += `
+                    <div class="bg-rose-50 border-l-4 border-rose-600 p-2.5 rounded text-rose-950 text-xs font-semibold shadow-2xs">
+                        ⚠️ <strong>Despido Injustificado:</strong> Se indexaron ${formatCOP(liquidacionIndemnizacion)} al total, computando 30 días por el año inicial y 20 proporcionales por la fracción subsiguiente.
+                    </div>`;
+            }
+            if(prestamosDeduccion > 0) {
+                alertBox.innerHTML += `
+                    <div class="bg-amber-50 border-l-4 border-amber-600 p-2.5 rounded text-amber-950 text-xs font-semibold shadow-2xs">
+                        💸 <strong>Descuentos de Cierre:</strong> Se aplicó un descuento de ${formatCOP(prestamosDeduccion)} al finiquito total bajo concepto de saldos deudores/préstamos.
+                    </div>`;
+            }
+
+            document.getElementById('wrapper-resultados-liquidacion').classList.remove('hidden');
+        }
+
+        function guardarLiquidacionEnLocalStorage() {
+            if (!OBJETO_LIQUIDACION_GLOBAL) return alert("No hay datos calculados para archivar.");
+            let dbLiq = JSON.parse(localStorage.getItem('db_carla_liquidaciones_2026')) || [];
+            dbLiq = dbLiq.filter(l => l.cedula !== OBJETO_LIQUIDACION_GLOBAL.cedula || OBJETO_LIQUIDACION_GLOBAL.cedula === "S/N");
+            dbLiq.push(OBJETO_LIQUIDACION_GLOBAL);
+            localStorage.setItem('db_carla_liquidaciones_2026', JSON.stringify(dbLiq));
+            alert(`Liquidación definitiva de ${OBJETO_LIQUIDACION_GLOBAL.nombre} guardada.`);
+            cargarTablaLiquidacionesHistorico();
+        }
+
+        function cargarTablaLiquidacionesHistorico() {
+            const dbLiq = JSON.parse(localStorage.getItem('db_carla_liquidaciones_2026')) || [];
+            const tbody = document.getElementById('tbodyLiquidacionesHistorico');
+            tbody.innerHTML = "";
+
+            if (dbLiq.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="5" class="p-3 text-center text-slate-400 italic">No hay liquidaciones archivadas.</td></tr>`;
+                return;
+            }
+
+            dbLiq.forEach((liq, index) => {
+                tbody.innerHTML += `
+                    <tr class="hover:bg-slate-50 border-b text-xs">
+                        <td class="p-2.5 font-bold text-slate-900">${liq.nombre} <span class="text-[9px] block text-indigo-600">${poolMotivoTexto(liq.motivo)}</span></td>
+                        <td class="p-2.5 text-slate-500 font-mono">${liq.fIngreso} / ${liq.fRetiro}</td>
+                        <td class="p-2.5 text-center font-bold">${liq.totalDias} días</td>
+                        <td class="p-2.5 text-right font-black text-emerald-600">${formatCOP(liq.totalNetoLiquidacion)}</td>
+                        <td class="p-2.5 text-center flex justify-center gap-1.5">
+                            <button type="button" onclick="recargarEImprimirLiquidacion(${index})" class="bg-indigo-600 text-white font-bold text-[10px] px-2.5 py-1 rounded-lg hover:bg-indigo-700 shadow-2xs">Re-Imprimir</button>
+                            <button type="button" onclick="eliminarLiquidacionArchivada(${index})" class="bg-rose-600 text-white font-bold text-[10px] px-2.5 py-1 rounded-lg hover:bg-rose-700 shadow-2xs">Eliminar</button>
+                        </td>
+                    </tr>
+                `;
+            });
+        }
+
+        function eliminarLiquidacionArchivada(index) {
+            let dbLiq = JSON.parse(localStorage.getItem('db_carla_liquidaciones_2026')) || [];
+            const nombre = dbLiq[index]?.nombre || "este registro";
+            if (!confirm(`¿Desea eliminar la liquidación guardada de ${nombre}?`)) return;
+            dbLiq.splice(index, 1);
+            localStorage.setItem('db_carla_liquidaciones_2026', JSON.stringify(dbLiq));
+            cargarTablaLiquidacionesHistorico();
+        }
+
+        function recargarEImprimirLiquidacion(index) {
+            const dbLiq = JSON.parse(localStorage.getItem('db_carla_liquidaciones_2026')) || [];
+            if (dbLiq[index]) {
+                OBJETO_LIQUIDACION_GLOBAL = dbLiq[index];
+                imprimirColillaLiquidacionDirecta();
+            }
+        }
+
+        function imprimirColillaLiquidacionDirecta() {
+            if(!OBJETO_LIQUIDACION_GLOBAL) return alert("Primero ejecute los cálculos del finiquito.");
+            document.getElementById('print-titulo-modulo').innerText = "Acta de Liquidación y Finiquito del Contrato de Trabajo";
+            const container = document.getElementById('htmlComprobante');
+            
+            container.innerHTML = `
+                <div class="bg-slate-100 p-4 rounded-xl border border-slate-300 space-y-1">
+                    <p class="text-xs"><strong>Trabajador / Ex-colaborador:</strong> ${OBJETO_LIQUIDACION_GLOBAL.nombre}</p>
+                    <p class="text-xs"><strong>Período Total del Vínculo:</strong> Desde ${OBJETO_LIQUIDACION_GLOBAL.fIngreso} hasta ${OBJETO_LIQUIDACION_GLOBAL.fRetiro} (${OBJETO_LIQUIDACION_GLOBAL.totalDias} días comerciales)</p>
+                    <p class="text-xs"><strong>Salario Contractual de Referencia Mensual:</strong> ${formatCOP(OBJETO_LIQUIDACION_GLOBAL.salarioBase)}</p>
+                    <p class="text-xs text-indigo-700"><strong>Motivo de Egreso Comercial:</strong> ${poolMotivoTexto(OBJETO_LIQUIDACION_GLOBAL.motivo)}</p>
+                </div>
+                <table class="w-full text-left text-xs border border-collapse mt-4">
+                    <thead>
+                        <tr class="bg-slate-200 border-b">
+                            <th class="p-2 font-bold">Concepto Laboral Adjudicado</th>
+                            <th class="p-2 font-bold text-center">Días base</th>
+                            <th class="p-2 font-bold text-right">Valor Total Liquidado</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y">
+                        <tr><td class="p-2">Cesantías Proporcionales de Ley</td><td class="p-2 text-center">${OBJETO_LIQUIDACION_GLOBAL.totalDias}</td><td class="p-2 text-right">${formatCOP(OBJETO_LIQUIDACION_GLOBAL.liquidacionCesantias)}</td></tr>
+                        <tr><td class="p-2">Intereses sobre Cesantías Acumulados (12%)</td><td class="p-2 text-center">${OBJETO_LIQUIDACION_GLOBAL.totalDias}</td><td class="p-2 text-right">${formatCOP(OBJETO_LIQUIDACION_GLOBAL.liquidacionIntCesantias)}</td></tr>
+                        <tr><td class="p-2">Prima de Servicios Proporcional</td><td class="p-2 text-center">${OBJETO_LIQUIDACION_GLOBAL.diasPrimaSemestre}</td><td class="p-2 text-right">${formatCOP(OBJETO_LIQUIDACION_GLOBAL.liquidacionPrima)}</td></tr>
+                        <tr><td class="p-2">Vacaciones Compensadas en Dinero (Bolsa pendiente)</td><td class="p-2 text-center">${OBJETO_LIQUIDACION_GLOBAL.diasVacPendientes.toFixed(1)}</td><td class="p-2 text-right">${formatCOP(OBJETO_LIQUIDACION_GLOBAL.liquidacionVacaciones)}</td></tr>
+                        <tr class="text-emerald-700"><td class="p-2">Bonificaciones / Comisiones Pendientes (+)</td><td class="p-2 text-center">-</td><td class="p-2 text-right">${formatCOP(OBJETO_LIQUIDACION_GLOBAL.bonosCierre || 0)}</td></tr>
+                        <tr class="text-rose-700"><td class="p-2">Préstamos / Deducciones de Cierre (-)</td><td class="p-2 text-center">-</td><td class="p-2 text-right">${formatCOP(OBJETO_LIQUIDACION_GLOBAL.prestamosDeduccion || 0)}</td></tr>
+                        <tr class="text-rose-700 font-bold"><td class="p-2">Indemnización por Despido Injustificado (Art. 64 CST)</td><td class="p-2 text-center">-</td><td class="p-2 text-right">${formatCOP(OBJETO_LIQUIDACION_GLOBAL.liquidacionIndemnizacion)}</td></tr>
+                        <tr class="bg-slate-900 text-amber-400 font-black text-sm"><td class="p-2" colspan="2">TOTAL FINIQUITO DE LEY A PAGAR:</td><td class="p-2 text-right">${formatCOP(OBJETO_LIQUIDACION_GLOBAL.totalNetoLiquidacion)}</td></tr>
+                    </tbody>
+                </table>
+                <p class="text-[10px] text-slate-500 mt-4 font-medium">El trabajador manifiesta que con el pago del valor aquí consignado, la empresa queda a paz y salvo por todo concepto de salarios, prestaciones y descansos derivados de la relación laboral.</p>
+                <div class="pt-16 grid grid-cols-2 gap-12 text-center text-[10px]">
+                    <div><hr class="border-slate-400 mb-1"><p>Firma Autorizada de la Empresa</p></div>
+                    <div><hr class="border-slate-400 mb-1"><p>Firma del Trabajador / C.C. Adjunta</p></div>
+                </div>
+            `;
+            document.getElementById('printArea').classList.remove('hidden');
+            document.getElementById('printArea').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function calcularYRenderizarIndicadores() {
+            const db = JSON.parse(localStorage.getItem('db_carla_turnos_2026')) || [];
+            
+            let acumuladoNeto = 0;
+            let acumuladoCostoEmpresa = 0;
+            let acumuladoExtras = 0;
+            let acumuladoIncap = 0;
+            let acumuladoVac = 0;
+            let sumaSalariosBasicos = 0;
+            let acumuladoCCF = 0;
+            let totalAuxTransp = 0;
+            
+            let acumuladoPrestaciones = 0;
+            let acumuladoSeguridadPatronal = 0;
+            let acumuladoARL = 0;
+            let acumuladoOperacionales = 0;
+            let sumaValorHora = 0;
+            let acumuladoTurnos = 0;
+
+            let totalSueldosBase = 0;
+            let totalPrestaciones = 0;
+            let totalSeguridadSocial = 0;
+            let totalRubrosOperacion = 0;
+
+            let totalRN = 0;
+            let totalHED_HEN = 0;
+            let totalDomFest = 0;
+            let totalPasivoEstimadoCierre = 0;
+
+            db.forEach(e => {
+                acumuladoNeto += e.netoPagar || 0;
+                acumuladoCostoEmpresa += e.patronal?.total || 0;
+                acumuladoExtras += e.totalExtrasMonetarias || 0;
+                acumuladoIncap += e.incap || 0;
+                acumuladoVac += e.vac || 0;
+                sumaSalariosBasicos += e.salario || 0;
+                acumuladoCCF += e.patronal?.ccf || 0;
+                totalAuxTransp += e.devengoAuxTransporte || 0;
+
+                acumuladoPrestaciones += ((e.prestaciones?.cesantias || 0) + (e.prestaciones?.intCesantias || 0) + (e.prestaciones?.prima || 0) + (e.prestaciones?.vacaciones || 0));
+                acumuladoSeguridadPatronal += ((e.patronal?.salud || 0) + (e.patronal?.pension || 0));
+                acumuladoARL += (e.patronal?.arl || 0);
+                acumuladoOperacionales += ((e.patronal?.dotacion || 0) + (e.patronal?.epp || 0) + (e.patronal?.medicos || 0) + (e.patronal?.fic || 0));
+                sumaValorHora += (e.valorHora || 0);
+                acumuladoTurnos += (e.qTurnos || 0);
+
+                totalRN += (e.desglosePesos?.v_rn || 0);
+                totalHED_HEN += ((e.desglosePesos?.v_hed || 0) + (e.desglosePesos?.v_hen || 0));
+                totalDomFest += ((e.desglosePesos?.v_dyfld || 0) + (e.desglosePesos?.v_dyfln || 0) + (e.desglosePesos?.v_hefd || 0) + (e.desglosePesos?.v_hefn || 0));
+
+                totalPasivoEstimadoCierre += acumuladoPrestaciones;
+
+                totalSueldosBase += (e.devengoSueldoBase + e.devengoIncapacidad + e.devengoVacaciones + e.totalExtrasMonetarias);
+                totalPrestaciones += ((e.prestaciones?.cesantias || 0) + (e.prestaciones?.intCesantias || 0) + (e.prestaciones?.prima || 0) + (e.prestaciones?.vacaciones || 0));
+                totalSeguridadSocial += ((e.patronal?.salud || 0) + (e.patronal?.pension || 0) + (e.patronal?.arl || 0) + (e.patronal?.parafiscales || 0) + (e.patronal?.ccf || 0));
+                totalRubrosOperacion += ((e.patronal?.dotacion || 0) + (e.patronal?.epp || 0) + (e.patronal?.medicos || 0) + (e.patronal?.fic || 0));
+            });
+
+            document.getElementById('ind-neto-mensual').innerText = formatCOP(acumuladoNeto);
+            document.getElementById('ind-costo-empresa').innerText = formatCOP(acumuladoCostoEmpresa);
+            document.getElementById('ind-quincena').innerText = formatCOP(totalAuxTransp);
+            document.getElementById('ind-extras').innerText = formatCOP(acumuladoExtras);
+            document.getElementById('ind-total-prestaciones').innerText = formatCOP(acumuladoPrestaciones);
+            document.getElementById('ind-total-seg-patronal').innerText = formatCOP(acumuladoSeguridadPatronal);
+            
+            document.getElementById('ind-total-ccf').innerText = formatCOP(acumuladoCCF);
+            document.getElementById('ind-total-arl').innerText = formatCOP(acumuladoARL);
+            document.getElementById('ind-total-operacionales').innerText = formatCOP(acumuladoOperacionales);
+            
+            const promedioVHora = db.length > 0 ? (sumaValorHora / db.length) : 0;
+            document.getElementById('ind-promedio-vhora').innerText = formatCOP(promedioVHora);
+            document.getElementById('ind-total-turnos').innerText = acumuladoTurnos + " Días Liq.";
+            document.getElementById('ind-pasivo-estimado').innerText = formatCOP(totalPasivoEstimadoCierre);
+
+            const pctImpacto = totalSueldosBase > 0 ? ((acumuladoExtras / totalSueldosBase) * 100).toFixed(1) : 0;
+            document.getElementById('ind-pct-impacto-extras').innerText = pctImpacto + "%";
+
+            const costoPromedioPersona = db.length > 0 ? (acumuladoCostoEmpresa / db.length) : 0;
+            document.getElementById('ind-costo-promedio-persona').innerText = formatCOP(costoPromedioPersona);
+
+            document.getElementById('ind-desglose-rn').innerText = formatCOP(totalRN);
+            document.getElementById('ind-desglose-hed').innerText = formatCOP(totalHED_HEN);
+            document.getElementById('ind-desglose-dom').innerText = formatCOP(totalDomFest);
+
+            document.getElementById('ind-total-incap').innerText = acumuladoIncap;
+            document.getElementById('ind-total-vac').innerText = acumuladoVac;
+            document.getElementById('ind-total-personas').innerText = db.length;
+            
+            const promedioSalario = db.length > 0 ? (sumaSalariosBasicos / db.length) : 0;
+            document.getElementById('ind-promedio-salario').innerText = formatCOP(promedioSalario);
+
+            const boxGrafico = document.getElementById('box-grafico-pesos');
+            boxGrafico.innerHTML = "";
+
+            if(acumuladoCostoEmpresa === 0) {
+                boxGrafico.innerHTML = `<p class="text-slate-400 text-center py-4">Agregue registros en el simulador para proyectar la carga porcentual corporativa.</p>`;
+            } else {
+                const itemsGrafico = [
+                    { nombre: "Devengados de Trabajadores", valor: totalSueldosBase, color: "bg-indigo-600" },
+                    { nombre: "Provisiones Prestacionales", valor: totalPrestaciones, color: "bg-emerald-500" },
+                    { nombre: "Seguridad Social y Parafiscales", valor: totalSeguridadSocial, color: "bg-amber-500" },
+                    { nombre: "Gastos Operativos", valor: totalRubrosOperacion, color: "bg-rose-500" }
+                ];
+
+                itemsGrafico.forEach(item => {
+                    const porcentaje = ((item.valor / acumuladoCostoEmpresa) * 100).toFixed(1);
+                    boxGrafico.innerHTML += `
+                        <div class="space-y-1">
+                            <div class="flex justify-between text-[11px] font-semibold text-slate-600">
+                                <span>${item.nombre}</span>
+                                <span class="font-bold text-slate-900">${formatCOP(item.valor)} (${porcentaje}%)</span>
+                            </div>
+                            <div class="w-full bg-slate-100 rounded-full h-2 overflow-hidden">
+                                <div class="${item.color} h-2 rounded-full" style="width: ${porcentaje}%"></div>
+                            </div>
+                        </div>
+                    `;
+                });
+            }
+
+            const divMayorSalario = document.getElementById('rank-mayores-salarios');
+            const divMenorSalario = document.getElementById('rank-menores-salarios');
+            const divIncapacidad = document.getElementById('rank-incapacidades');
+
+            if (db.length === 0) {
+                const avisoVacio = `<p class="text-slate-400 text-center py-2 italic">Sin registros archivados.</p>`;
+                if(divMayorSalario) divMayorSalario.innerHTML = avisoVacio;
+                if(divMenorSalario) divMenorSalario.innerHTML = avisoVacio;
+                if(divIncapacidad) divIncapacidad.innerHTML = avisoVacio;
+                return;
+            }
+
+            if(divMayorSalario){
+                let dbMayorSalario = [...db].sort((a, b) => b.salario - a.salario).slice(0, 5);
+                divMayorSalario.innerHTML = "";
+                dbMayorSalario.forEach((emp, index) => {
+                    divMayorSalario.innerHTML += `
+                        <div class="flex justify-between items-center p-1.5 bg-slate-50 rounded border border-slate-100">
+                            <span class="font-bold text-indigo-600">#${index+1} <span class="text-slate-700 font-medium">${emp.nombre}</span></span>
+                            <span class="font-black text-slate-800">${formatCOP(emp.salario)}</span>
+                        </div>`;
+                });
+            }
+
+            if(divMenorSalario){
+                let dbMenorSalario = [...db].sort((a, b) => a.salario - b.salario).slice(0, 5);
+                divMenorSalario.innerHTML = "";
+                dbMenorSalario.forEach((emp, index) => {
+                    divMenorSalario.innerHTML += `
+                        <div class="flex justify-between items-center p-1.5 bg-slate-50 rounded border border-slate-100">
+                            <span class="font-bold text-slate-500">#${index+1} <span class="text-slate-700 font-medium">${emp.nombre}</span></span>
+                            <span class="font-black text-slate-800">${formatCOP(emp.salario)}</span>
+                        </div>`;
+                });
+            }
+
+            if(divIncapacidad){
+                let dbIncap = [...db].sort((a, b) => b.incap - a.incap).slice(0, 5);
+                divIncapacidad.innerHTML = "";
+                dbIncap.forEach((emp, index) => {
+                    const colorFondo = emp.incap > 0 ? 'bg-rose-50/60 border-rose-100' : 'bg-slate-50 border-slate-100';
+                    const colorTexto = emp.incap > 0 ? 'text-rose-600 font-black' : 'text-slate-400 font-medium';
+                    divIncapacidad.innerHTML += `
+                        <div class="flex justify-between items-center p-1.5 rounded border ${colorFondo}">
+                            <span class="font-bold text-slate-700">#${index+1} <span class="text-slate-700 font-medium">${emp.nombre}</span></span>
+                            <span class="${colorTexto}">${emp.incap} Días</span>
+                        </div>`;
+                });
+            }
+        }
+
+        function exportarBaseDatosACSV() {
+            const db = JSON.parse(localStorage.getItem('db_carla_turnos_2026')) || [];
+            if(db.length === 0) return alert("No existen datos para generar el reporte.");
+
+            let contenidoCsv = "Cedula,Nombre,Salario Base,Periodicidad,Total Devengado,Total Deducciones,Neto Pagado,IBC,Prima Periodo,Cesantias Periodo,Costo Total Empresa\n";
+            db.forEach(e => {
+                contenidoCsv += `${e.cedula},"${e.nombre}",${Math.round(e.salario)},${e.periodicidad},${Math.round(e.totalDevengado)},${Math.round(e.deduccionesTotales)},${Math.round(e.netoPagar)},${Math.round(e.ibc)},${Math.round(e.prestaciones?.prima || 0)},${Math.round(e.prestaciones?.cesantias || 0)},${Math.round(e.patronal.total)}\n`;
+            });
+
+            const blob = new Blob([contenidoCsv], { type: 'text/csv;charset=utf-8;' });
+            const link = document.createElement("a");
+            link.href = URL.createObjectURL(blob);
+            link.setAttribute("download", "reporte_nomina_auditoria_2026.csv");
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
+
+        function imprimirColillaCarla(cedula) {
+            const db = JSON.parse(localStorage.getItem('db_carla_turnos_2026')) || [];
+            const emp = db.find(e => e.cedula === cedula);
+            if(!emp) return;
+
+            document.getElementById('print-titulo-modulo').innerText = `Comprobante de Pago (${emp.periodicidad} Días)`;
+            const container = document.getElementById('htmlComprobante');
+            container.innerHTML = `
+                <div class="grid grid-cols-2 gap-4 bg-slate-50 p-4 rounded-2xl border">
+                    <div><h4 class="font-black text-sm text-slate-900">${emp.nombre}</h4><p><strong>Cédula:</strong> ${emp.cedula}</p></div>
+                    <div class="text-right">
+                        <p><strong>Salario Base Mensual:</strong> ${formatCOP(emp.salario)}</p>
+                        <p class="text-indigo-600 font-bold"><strong>IBC Periodo (${emp.periodicidad} d):</strong> ${formatCOP(emp.ibc)}</p>
+                    </div>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-4">
+                    <div class="space-y-1">
+                        <span class="text-[10px] font-black text-emerald-600 block border-b uppercase">(+) Devengados del Periodo</span>
+                        <div class="flex justify-between"><span>Sueldo Días Efectivos:</span><span>${formatCOP(emp.devengoSueldoBase)}</span></div>
+                        <div class="flex justify-between"><span>Auxilio Incapacidades:</span><span>${formatCOP(emp.devengoIncapacidad)}</span></div>
+                        <div class="flex justify-between"><span>Vacaciones Disfrutadas:</span><span>${formatCOP(emp.devengoVacaciones)}</span></div>
+                        <div class="flex justify-between"><span>Auxilio de Transporte:</span><span>${formatCOP(emp.devengoAuxTransporte)}</span></div>
+                        <div class="flex justify-between font-bold"><span>Total Horas Extras y Recargos:</span><span>${formatCOP(emp.totalExtrasMonetarias)}</span></div>
+                        <div class="flex justify-between font-black text-emerald-600 border-t pt-1"><span>TOTAL DEVENGADO:</span><span>${formatCOP(emp.totalDevengado)}</span></div>
+                    </div>
+                    <div class="space-y-1">
+                        <span class="text-[10px] font-black text-rose-600 block border-b uppercase">(-) Deducciones</span>
+                        <div class="flex justify-between"><span>Salud (4%):</span><span>${formatCOP(emp.saludObrera)}</span></div>
+                        <div class="flex justify-between"><span>Pensión (4%):</span><span>${formatCOP(emp.pensionObrera)}</span></div>
+                        <div class="flex justify-between"><span>Fondo Solidaridad Pensional:</span><span>${formatCOP(emp.fsp)}</span></div>
+                        <div class="flex justify-between"><span>Retención Fuente:</span><span>${formatCOP(emp.retencionFuente)}</span></div>
+                        <div class="flex justify-between"><span>Otras Deducciones:</span><span>${formatCOP(emp.otrasDeducciones)}</span></div>
+                        <div class="flex justify-between font-black text-rose-600 border-t pt-1"><span>TOTAL DEDUCCIONES:</span><span>${formatCOP(emp.deduccionesTotales)}</span></div>
+                    </div>
+                </div>
+
+                <div class="bg-emerald-50 border border-emerald-200 p-4 rounded-xl mt-4 text-center">
+                    <h4 class="font-black text-emerald-800 text-sm uppercase">Neto a Pagar al Empleado</h4>
+                    <span class="text-2xl font-mono font-black text-emerald-600">${formatCOP(emp.netoPagar)}</span>
+                </div>
+
+                <h4 class="font-bold text-slate-900 text-xs border-b pb-1 uppercase tracking-wider pt-6">Apropiación de Prestaciones Sociales del Periodo (Costo Empresa)</h4>
+                <div class="grid grid-cols-4 gap-2 text-center text-[11px] font-medium mt-2">
+                    <div class="bg-slate-50 border p-2 rounded-xl">Prima (8.33%):<br><span class="text-indigo-600 font-bold">${formatCOP(emp.prestaciones.prima)}</span></div>
+                    <div class="bg-slate-50 border p-2 rounded-xl">Cesantías (8.33%):<br><span class="text-indigo-600 font-bold">${formatCOP(emp.prestaciones.cesantias)}</span></div>
+                    <div class="bg-slate-50 border p-2 rounded-xl">Int. Cesantías (12%):<br><span class="text-indigo-600 font-bold">${formatCOP(emp.prestaciones.intCesantias)}</span></div>
+                    <div class="bg-slate-50 border p-2 rounded-xl">Vacaciones (4.17%):<br><span class="text-indigo-600 font-bold">${formatCOP(emp.prestaciones.vacaciones)}</span></div>
+                </div>
+                
+                <div class="bg-slate-900 text-white p-4 rounded-2xl border mt-4 space-y-3">
+                    <div>
+                        <h5 class="font-bold text-xs text-indigo-400 mb-1 uppercase">Carga Patronal y Aportes del Periodo</h5>
+                        <div class="grid grid-cols-2 md:grid-cols-4 gap-2 text-[11px]">
+                            <div>Pensión (12%): <strong>${formatCOP(emp.patronal.pension)}</strong></div>
+                            <div>Salud (8.5%): <strong>${formatCOP(emp.patronal.salud)}</strong></div>
+                            <div>ARL Seleccionado: <strong>${formatCOP(emp.patronal.arl)}</strong></div>
+                            <div>Caja Compensación (4%): <strong>${formatCOP(emp.patronal.ccf)}</strong></div>
+                        </div>
+                    </div>
+                    <div class="border-t border-slate-700 pt-2 flex justify-between items-center text-xs font-black">
+                        <span class="text-slate-300">COSTO TOTAL EMPRESA DEL PERIODO:</span>
+                        <span class="text-amber-400 text-sm font-mono">${formatCOP(emp.patronal.total)}</span>
+                    </div>
+                </div>
+            `;
+            document.getElementById('printArea').classList.remove('hidden');
+            document.getElementById('printArea').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function exportarBackupJSON() {
+            const data = localStorage.getItem('db_carla_turnos_2026');
+            if(!data) return alert("No hay registros.");
+            const blob = new Blob([data], { type: "application/json" });
+            const a = document.createElement('a');
+            a.href = URL.createObjectURL(blob);
+            a.download = `backup_turnos_carla_2026.json`;
+            a.click();
+        }
+
+        window.onload = function() { sincronizarCalculosEnVivo(); };
+    </script>
+</body>
+</html>

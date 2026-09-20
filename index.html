@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nómina Segura | Consultoría & Auditoría 2026</title>
+    <link rel="stylesheet" href="offline.css">
+    
+    <style>
+        :root { --primary: #002D5B; --accent: #00B4D8; }
+        body { font-family: 'Segoe UI', Arial, sans-serif; background-color: #f8fafc; }
+        h1, h2, h3 { font-family: 'Segoe UI', Arial, sans-serif; }
+        .glass-nav { background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(12px); border-bottom: 1px solid rgba(0,0,0,0.05); }
+        .hero-gradient { background: radial-gradient(circle at top right, #0056b3, #001a33); }
+        .modern-card { transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); border: 1px solid rgba(0,0,0,0.05); }
+        .modern-card:hover { transform: translateY(-12px); box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.15); }
+        .brand-logo { width: clamp(180px, 18vw, 260px); height: auto; max-height: 82px; object-fit: contain; border-radius: 8px; }
+        @media (max-width: 767px) {
+            .brand-logo { width: 140px; max-height: 54px; }
+            .glass-nav .nav-inner { padding-left: 12px; padding-right: 12px; gap: 10px; }
+            .platform-link { padding: 9px 10px !important; font-size: 9px !important; white-space: nowrap; }
+        }
+
+        @media (max-width: 520px) {
+            .glass-nav .nav-inner { flex-wrap: wrap; justify-content: center; padding-top: 8px; padding-bottom: 8px; }
+            .brand-logo { width: 155px; max-height: 58px; }
+            .platform-link { width: 100%; justify-content: center; }
+            header { padding-top: 150px !important; }
+        }
+        @media (min-width: 768px) and (max-width: 1100px) {
+            .glass-nav .nav-inner { gap: 14px; }
+            .glass-nav .space-x-8 { gap: 18px; }
+            .platform-link { padding-left: 14px !important; padding-right: 14px !important; }
+        }
+    </style>
+</head>
+<body id="inicio">
+
+    <nav class="glass-nav fixed w-full z-50">
+        <div class="nav-inner max-w-7xl mx-auto px-6 py-2 flex justify-between items-center">
+            <a href="#inicio" class="flex items-center">
+                <img src="logo_web.png" class="brand-logo drop-shadow-md hover:scale-105 transition-transform duration-300" alt="Logo Nómina Segura">
+            </a>
+            <div class="hidden md:flex space-x-8 font-bold text-xs uppercase tracking-widest text-slate-700 items-center">
+                <a href="#inicio" class="hover:text-cyan-500 transition">Inicio</a>
+                <a href="#metodo" class="hover:text-cyan-500 transition">Metodología</a>
+                <a href="#simulador" class="hover:text-cyan-500 transition">Consola 2026</a>
+                <a href="#faq" class="hover:text-cyan-500 transition">Preguntas</a>
+            </div>
+            <a href="plataforma.html" class="platform-link bg-cyan-500 text-white px-6 py-3 rounded-full font-bold hover:bg-slate-900 transition shadow-lg text-xs tracking-wider flex items-center gap-2">
+                <i class="fas fa-desktop"></i> INGRESAR A LA PLATAFORMA
+            </a>
+        </div>
+    </nav>
+
+    <header class="relative min-h-screen hero-gradient flex items-center justify-center text-center text-white px-6 pt-32 pb-20">
+        <div class="max-w-4xl flex flex-col items-center" data-aos="zoom-in">
+
+            <span class="bg-cyan-500/20 text-cyan-300 px-5 py-2 rounded-full text-xs font-bold tracking-widest uppercase mb-6 inline-block border border-cyan-400/30">Auditoría Preventiva 2026</span>
+            <h1 class="text-5xl md:text-7xl font-extrabold mb-8 leading-tight tracking-tight">Blindaje Laboral Inteligente.</h1>
+            <p class="text-blue-100 text-lg md:text-xl mb-10 font-light max-w-2xl">Protege el patrimonio de tu empresa con nuestra consola de costeo exacto y fiscalización de nómina bajo normativa UGPP.</p>
+            <a href="plataforma.html" class="bg-white text-blue-900 px-10 py-5 rounded-2xl text-lg font-black hover:bg-cyan-50 transition-all shadow-[0_20px_50px_rgba(8,_112,_184,_0.7)] hover:shadow-[0_20px_50px_rgba(8,_112,_184,_0.9)] hover:-translate-y-1 uppercase tracking-wide">
+                Iniciar Plataforma
+            </a>
+        </div>
+    </header>
+
+    <section id="metodo" class="py-32">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="text-center mb-24" data-aos="fade-up">
+                <h2 class="text-4xl font-extrabold text-blue-950 mb-4 tracking-tight">¿Por qué elegir Nómina Segura?</h2>
+                <div class="h-1 w-20 bg-cyan-500 mx-auto rounded-full"></div>
+            </div>
+            <div class="grid md:grid-cols-3 gap-10">
+                <div class="modern-card bg-white p-10 rounded-[40px]" data-aos="fade-up">
+                    <div class="bg-blue-50 w-20 h-20 rounded-2xl flex items-center justify-center mb-6">
+                        <i class="fas fa-shield-halved text-4xl text-blue-600"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-4 text-slate-800">Auditoría Algorítmica</h3>
+                    <p class="text-slate-500 leading-relaxed">Detectamos inconsistencias en el IBC y liquidaciones antes de que se conviertan en sanciones reales.</p>
+                </div>
+                <div class="modern-card bg-white p-10 rounded-[40px]" data-aos="fade-up" data-aos-delay="100">
+                    <div class="bg-cyan-50 w-20 h-20 rounded-2xl flex items-center justify-center mb-6">
+                        <i class="fas fa-microchip text-4xl text-cyan-600"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-4 text-slate-800">Enfoque Normativo 2026</h3>
+                    <p class="text-slate-500 leading-relaxed">Nuestra plataforma está 100% alineada con el Código Sustantivo de Trabajo y las últimas circulares de la UGPP.</p>
+                </div>
+                <div class="modern-card bg-white p-10 rounded-[40px]" data-aos="fade-up" data-aos-delay="200">
+                    <div class="bg-indigo-50 w-20 h-20 rounded-2xl flex items-center justify-center mb-6">
+                        <i class="fas fa-users-gear text-4xl text-indigo-600"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-4 text-slate-800">Soporte Estratégico</h3>
+                    <p class="text-slate-500 leading-relaxed">No es solo software, son expertos en legislación laboral acompañando las decisiones de tu equipo contable.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="simulador" class="py-32 bg-slate-900 text-white relative overflow-hidden">
+        <div class="absolute top-0 right-0 w-96 h-96 bg-cyan-500/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2"></div>
+        <div class="absolute bottom-0 left-0 w-96 h-96 bg-blue-600/10 rounded-full blur-3xl translate-y-1/2 -translate-x-1/2"></div>
+
+        <div class="max-w-7xl mx-auto px-6 relative z-10">
+            <h2 class="text-4xl md:text-5xl font-extrabold mb-20 tracking-tight" data-aos="fade-right">Módulos de la Consola</h2>
+            <div class="space-y-32">
+                <div class="flex flex-col md:flex-row items-center gap-16" data-aos="fade-up">
+                    <div class="md:w-3/5 rounded-3xl overflow-hidden border border-white/10 shadow-2xl"><img src="image_8cfdf6.jpg" alt="Consola de Costos" class="w-full object-cover"></div>
+                    <div class="md:w-2/5">
+                        <span class="text-cyan-400 font-bold block mb-2 tracking-widest uppercase text-xs">Módulo 01</span>
+                        <h3 class="text-3xl font-bold mb-6">Control y Costeo de Periodos</h3>
+                        <p class="text-slate-400 leading-relaxed text-lg">Flexibilidad absoluta. Simula liquidaciones semanales, decenales, quincenales o mensuales manteniendo intacta la normalización legal del IBC a 30 días.</p>
+                    </div>
+                </div>
+                <div class="flex flex-col md:flex-row-reverse items-center gap-16" data-aos="fade-up">
+                    <div class="md:w-3/5 rounded-3xl overflow-hidden border border-white/10 shadow-2xl"><img src="image_8cfe6c.png" alt="Liquidación Definitiva" class="w-full object-cover"></div>
+                    <div class="md:w-2/5">
+                        <span class="text-cyan-400 font-bold block mb-2 tracking-widest uppercase text-xs">Módulo 02</span>
+                        <h3 class="text-3xl font-bold mb-6">Liquidación y Finiquito Experto</h3>
+                        <p class="text-slate-400 leading-relaxed text-lg">Precisión matemática para el cálculo de cesantías, prima, vacaciones e indemnizaciones por despido injustificado (Art. 64), con generación de actas inmediatas.</p>
+                    </div>
+                </div>
+                <div class="flex flex-col md:flex-row items-center gap-16" data-aos="fade-up">
+                    <div class="md:w-3/5 rounded-3xl overflow-hidden border border-white/10 shadow-2xl"><img src="image_8d01ee.jpg" alt="Dashboard Analítico" class="w-full object-cover"></div>
+                    <div class="md:w-2/5">
+                        <span class="text-cyan-400 font-bold block mb-2 tracking-widest uppercase text-xs">Módulo 03</span>
+                        <h3 class="text-3xl font-bold mb-6">Analítica de Costos en Vivo</h3>
+                        <p class="text-slate-400 leading-relaxed text-lg">Dashboard centralizado que convierte los datos en decisiones. Visualiza el impacto de horas extras, promedios de incapacidades y el peso real de la carga prestacional.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="mt-32 text-center" data-aos="zoom-in">
+                <a href="plataforma.html" class="inline-flex items-center gap-3 bg-cyan-500 text-white px-10 py-5 rounded-2xl text-lg font-black hover:bg-cyan-400 transition-all shadow-[0_0_40px_rgba(0,_180,_216,_0.4)] hover:shadow-[0_0_60px_rgba(0,_180,_216,_0.6)] uppercase tracking-wide">
+                    Ingresar a la Plataforma <i class="fas fa-arrow-right"></i>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <section id="faq" class="py-32 bg-slate-100">
+        <div class="max-w-3xl mx-auto px-6">
+            <h2 class="text-4xl font-extrabold text-blue-950 text-center mb-16 tracking-tight">Preguntas Frecuentes</h2>
+            <div class="space-y-6">
+                <div class="bg-white p-8 rounded-2xl shadow-sm border border-slate-200 hover:shadow-md transition">
+                    <h3 class="text-lg font-bold text-blue-900 mb-3 flex items-center gap-3"><i class="fas fa-lock text-cyan-500"></i> ¿Mis datos financieros están seguros?</h3>
+                    <p class="text-slate-600 leading-relaxed">Absolutamente. Nuestra arquitectura prioriza el almacenamiento local (`localStorage`) y encriptado. Ningún dato sensible de tu nómina abandona el entorno corporativo hacia servidores no autorizados.</p>
+                </div>
+                <div class="bg-white p-8 rounded-2xl shadow-sm border border-slate-200 hover:shadow-md transition">
+                    <h3 class="text-lg font-bold text-blue-900 mb-3 flex items-center gap-3"><i class="fas fa-gavel text-cyan-500"></i> ¿La plataforma se ajusta a la ley colombiana?</h3>
+                    <p class="text-slate-600 leading-relaxed">Sí. Los cálculos de seguridad social, exoneraciones (Ley 1607), prestaciones y retención en la fuente (Art. 383 ET) están blindados y formulados estrictamente bajo la normativa vigente de 2026.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <a href="https://wa.me/57XXXXXXXXXX" target="_blank" class="fixed bottom-8 right-8 bg-[#25D366] text-white w-16 h-16 flex items-center justify-center rounded-full shadow-[0_10px_20px_rgba(37,_211,_102,_0.4)] hover:scale-110 hover:-translate-y-2 transition-all duration-300 z-50">
+        <i class="fab fa-whatsapp text-3xl"></i>
+    </a>
+
+    <footer class="bg-blue-950 text-slate-400 py-16">
+        <div class="max-w-7xl mx-auto px-6 flex flex-col items-center text-center">
+            <div class="p-5 rounded-3xl mb-8 shadow-lg">
+                <img src="logo_web.png" class="h-32 md:h-40 w-auto object-contain" alt="Logo Nómina Segura">
+            </div>
+            
+            <p class="text-sm font-medium tracking-wide">&copy; 2026 Nómina Segura Consultoría & Auditoría.</p>
+            <p class="text-xs mt-2 opacity-60">Diseñado para el cumplimiento normativo en Colombia.</p>
+        </div>
+    </footer>
+</body>
+</html>
